@@ -1,0 +1,717 @@
+/* FONTS */
+@font-face {
+    font-family: inter;
+    src: url(../fonts/Inter-VariableFont_slnt\,wght.ttf);
+    font-weight: 100 900;
+}
+
+/* COLORS */
+:root {
+    --primary1: #1adca7;
+    --primary1-transparent: #1adca71A;
+
+    --background1: #111111;
+    --background2: #222222;
+
+    --font1: #dddddd;
+    --font2: #222222;
+
+    --highlight: #ffffff1A;
+    --shadow: #0000001A;
+
+    --transparent: #00000000;
+}
+body.theme-switch-toggled {
+
+    --background1: #dddddd;
+    --background2: #eeeeee;
+
+    --font1: #222222;
+    --font2: #dddddd;
+
+    --highlight: #0000001A;
+    --shadow: #9999991A;
+}
+
+/* NORMALIZE */
+* {
+    font-family: inter;
+    font-weight: 400;
+    box-sizing: border-box;
+    padding: 0;
+    margin: 0;
+    scroll-behavior: smooth;
+    overscroll-behavior: none;
+    user-select: none;
+    scroll-behavior: smooth;
+}
+
+body {
+    background-color: var(--background1);
+    -webkit-font-smoothing: antialiased;
+}
+/* Style for Webkit (Chrome, Safari) */
+body::-webkit-scrollbar {
+    width: 8px; /* Specify the width of the scrollbar */
+}
+body::-webkit-scrollbar-thumb {
+    background-color: var(--highlight); /* Set thumb color to transparent */
+    border-radius: 20px;
+}
+body::-webkit-scrollbar-track {
+    background-color: var(--background2); /* Set track color to transparent */
+}
+
+main {
+    color: var(--font1);
+}
+#header-container {
+    height: 56px;
+}
+
+a {
+    color: inherit;
+    text-decoration: none;
+}
+
+/* HEADER */
+header {
+    position: fixed;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 56px;
+    width: 100%;
+    background-color: var(--background2);
+    color: var(--font1);
+    box-shadow: 0 3px 5px var(--shadow);
+    overflow: hidden;
+}
+
+@keyframes flashBorder {
+    0%, 100% {
+      box-shadow: inset 0 -3px 0 0 var(--primary1);
+    }
+    50% {
+      box-shadow: inset 0 0 0 0 transparent;
+    }
+}
+  
+header.class-starting-soon {
+    animation: flashBorder 1s infinite;
+}
+
+@keyframes flashClassIcon {
+    0%, 100% {
+      color: var(--font1);
+    }
+    50% {
+      color: var(--primary1);
+    }
+}
+
+header.class-starting-soon .fa-shapes {
+    animation: flashClassIcon 1s infinite;
+}
+
+#header-left {
+    margin-right: 35px; /* to push the header middle more towards the middle */
+}
+#header-logo-link {
+    display: flex;
+}
+#header-logo {
+    margin: 0px 14px;
+    height: 40px;
+    width: 40px;
+}
+#search-dropdown-container.search-container-is-active #search-button {
+    color: var(--primary1);
+    background-color: var(--primary1-transparent);
+}
+
+#header-middle {
+    font-size: 20px;
+}
+#header-middle .fa-chevron-right {
+    display: none;
+}
+
+.page-link {
+    border: 1 solid var(--transparent);
+    border-radius: 12px;
+    padding: 13px 4vw;
+    margin: 0px 3px;
+    transition: background-color 0.2s;
+}
+.page-link:hover {
+    background-color: var(--highlight);
+}
+.page-link i {
+    transition: transform 0.1s ease;
+}
+.current-page-link {
+    color: var(--primary1);
+    border-bottom: 3px solid var(--primary1);
+    padding: 15px 4vw;
+    margin: 0px 3px;
+}
+.current-page-link i {
+    transform: translateY(1.5px);
+}
+.flex {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#messages-dropdown-container.messages-container-is-active #messages-button {
+    color: var(--primary1);
+    background-color: var(--primary1-transparent);
+}
+#notifications-dropdown-container.notifications-container-is-active #notifications-button {
+    color: var(--primary1);
+    background-color: var(--primary1-transparent);
+}
+#profile-dropdown.profile-dropdown-is-active #header-login {
+    color: var(--primary1);
+    background-color: var(--primary1-transparent);
+    border: 1px solid var(--primary1);
+}
+
+/* structure for main header button or any circular button */
+#header-avatar {
+    margin: 0px 14px 0px 10px;
+    height: 40px;
+    width: 40px;
+    border: 0px solid var(--transparent);
+    border-radius: 100%;
+    cursor: pointer;
+    transition: border 0.1s ease;
+}
+#header-avatar:active {
+    border: 2px solid var(--transparent);
+}
+#messages-button {
+    margin-right: 10px;
+}
+
+.icon-circle {
+    font-size: 16px;
+    color: var(--font1);
+    width: 40px;
+    height: 40px;
+    background-color: var(--highlight);
+    border: 0;
+    border-radius: 100%;
+    cursor: pointer;
+    transition: transform 0.1s ease, color 0.2s, border 0.2s;
+}
+.icon-circle:hover {
+    color: var(--primary1);
+}
+.icon-circle:active {
+    transform: translateY(3px);
+}
+
+/* TOOLTIPS AND DROPDOWN MENUS */
+.dropdown {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 40px; 
+}
+
+/* tooltips for main header page links */
+.page-link-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.tooltip {
+    position: absolute;
+    z-index: 3;
+    font-size: 16px;
+    display: none;
+    position: fixed;
+    top: 60px;
+    opacity: 60%;
+}
+.page-link-container:hover .tooltip {
+    display: block;
+}
+
+/* header search bar, responds to click listener in JS */
+#search-bar {
+    display: block;
+    position: fixed;
+    top: 60px;
+    left: -350px;
+    font-size: 14px;
+    color: var(--font1);
+    background-color: var(--background2);
+    width: 340px;
+    max-width: 97vw;
+    padding: 12px;
+    border: none;
+    border-radius: 12px;
+    box-shadow: 0 3px 5px var(--shadow);
+    transition: left 0.2s ease; /* Smooth transition for the 'right' property */
+}
+#search-bar.search-bar-is-active {
+    left: 5px;
+}
+#search-bar:focus {
+    outline: none;
+}
+
+/* messages drop down window */
+#messages-dropdown {
+    display: flex; /* Show the dropdown when the class is active */
+    flex-direction: column;
+    position: fixed;
+    top: 60px;
+    right: -390px;
+    font-size: 14px;
+    color: var(--font1);
+    background-color: var(--background2);
+    width: 380px;
+    max-width: 97vw;
+    padding: 8px;
+    border: none;
+    border-radius: 12px;
+    box-shadow: 0 3px 5px var(--shadow);
+    transition: right 0.2s ease; /* Smooth transition for the 'right' property */
+}
+#messages-dropdown.messages-dropdown-is-active {
+    right: 5px;
+}
+.message {
+    display: flex;
+    justify-content: left;
+    align-items: center;
+    padding: 10px 12px;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+.message:hover {
+    background-color: var(--highlight);
+}
+#messages-title-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 0px 14px;
+    margin: 0px 12px 5px;
+    border-bottom: 1px solid var(--highlight);
+}
+#messages-title {
+    font-size: 24px;
+    font-weight: 600;
+}
+#view-all-messages {
+    font-size: 16px;
+    font-weight: 500;
+    color: var(--primary1);
+    margin-right: 10px;
+    border-top: 3px solid transparent;
+    border-bottom: 1px solid transparent;
+    transition: border-bottom 0.2s;
+}
+#view-all-messages:hover {
+    border-bottom: 1px solid var(--primary1);
+}
+.message-img {
+    height: 50px;
+    float: left;
+    border-radius: 100%;
+    margin-right: 12px;
+}
+.message-name {
+    font-weight: 600;
+    margin-bottom: 3px;
+}
+.message-content {
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    -webkit-line-clamp: 2;
+}
+.message-summary {
+    opacity: 70%;
+}
+
+/* notifications drop down window */
+#notifications-dropdown {
+    display: flex; /* Show the dropdown when the class is active */
+    flex-direction: column;
+    position: fixed;
+    top: 60px;
+    right: -390px;
+    font-size: 14px;
+    color: var(--font1);
+    background-color: var(--background2);
+    width: 380px;
+    max-width: 97vw;
+    padding: 8px;
+    border: none;
+    border-radius: 12px;
+    box-shadow: 0 3px 5px var(--shadow);
+    transition: right 0.2s ease; /* Smooth transition for the 'right' property */
+}
+#notifications-dropdown.notifications-dropdown-is-active {
+    right: 5px;
+}
+.notification {
+    display: flex;
+    justify-content: left;
+    align-items: center;
+    padding: 10px 12px;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+.notification:hover {
+    background-color: var(--highlight);
+}
+#notifications-title-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 0px 14px;
+    margin: 0px 12px 5px;
+    border-bottom: 1px solid var(--highlight);
+}
+#notifications-title {
+    font-size: 24px;
+    font-weight: 600;
+}
+#view-all-notifications {
+    font-size: 16px;
+    font-weight: 500;
+    color: var(--primary1);
+    margin-right: 10px;
+    border-top: 3px solid transparent;
+    border-bottom: 1px solid transparent;
+    transition: border-bottom 0.2s;
+}
+#view-all-notifications:hover {
+    border-bottom: 1px solid var(--primary1);
+}
+.notification-img {
+    height: 50px;
+    float: left;
+    border-radius: 100%;
+    margin-right: 12px;
+}
+.notification-content {
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    -webkit-line-clamp: 3;
+}
+.notification-name, .notification-summary {
+    display: inline;
+}
+.notification-name {
+    font-weight: 600;
+}
+.notification-summary {
+    opacity: 70%;
+}
+
+/* avatar drop down window */
+#avatar-dropdown {
+    display: flex; /* Show the dropdown when the class is active */
+    flex-direction: column;
+    position: fixed;
+    top: 60px;
+    right: -290px;
+    font-size: 14px;
+    color: var(--font1);
+    background-color: var(--background2);
+    width: 280px;
+    max-width: 97vw;
+    padding: 12px;
+    border: none;
+    border-radius: 12px;
+    box-shadow: 0 3px 5px var(--shadow);
+    transition: right 0.2s ease; /* Smooth transition for the 'right' property */
+}
+#avatar-dropdown.avatar-dropdown-is-active {
+    right: 5px;
+}
+
+/* theme switch */
+#theme-switch {
+    color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    height: 60px;
+    margin: 0px 14px 8px;
+    border-bottom: 1px solid var(--highlight);
+}
+#theme-switch h6 {
+    color: var(--font1);
+    font-size: 18px;
+    padding: 0px 20px;
+}
+#outer-theme-switch {
+    background-color: var(--background1);
+    position: relative;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    width: 60px;
+    height: 30px;
+    border-radius: 100px;
+}
+#inner-theme-switch {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 26px;
+    height: 26px;
+    border-radius: 100%;
+    margin: 2px;
+    background-color: var(--primary1);
+    transition: transform 0.2s;
+}
+#inner-theme-switch .fa-sun {
+    display: none;
+}
+
+/* MOVE THEME SWITCH */
+body.theme-switch-toggled #inner-theme-switch {
+    transform: translateX(30px);
+}
+body.theme-switch-toggled #inner-theme-switch .fa-moon {
+    display: none;
+}
+body.theme-switch-toggled #inner-theme-switch .fa-sun {
+    display: block;
+}
+
+/* More Avatar Dropdown Menu Items */
+.avatar-menu-profile {
+    font-weight: 600;
+    color: var(--font1);
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    cursor: pointer;
+    height: 68px;
+    padding: 30px 14px;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 0 5px 5px var(--shadow);
+    transition: background-color 0.2s;
+}
+.avatar-menu-profile a {
+    font-size: 20px;
+    font-weight: 600;
+    margin-left: 12px;
+}
+.avatar-menu-profile:hover {
+    background-color: var(--highlight);
+}
+#avatar-menu-avatar {
+    border-radius: 100%;
+    width: 42px;
+}
+.avatar-menu-item {
+    font-size: 18px;
+    color: var(--font1);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    cursor: pointer;
+    height: 40px;
+    padding: 24px 20px;
+    margin: 2px 0px;
+    border-radius: 8px;
+    transition: background-color 0.2s;
+}
+.avatar-menu-item:hover {
+    background-color: var(--highlight);
+}
+#header-login {
+    display: none;
+    justify-content: center;
+    align-items: center;
+    color: var(--font1);
+    border: 1px solid var(--font1);
+    border-radius: 100px;
+    padding: 12px 10px;
+    margin: 0px 14px 0px 10px;
+    cursor: pointer;
+}
+
+#login-container {
+    display: none;
+}
+
+/* Avatar Menu (Not Logged In) */
+.avatar-menu-profile i {
+    font-size: 22px;
+    margin: 10px;
+}
+.dropdown.not-logged-in #header-login {
+    display: flex;
+}
+.dropdown.not-logged-in #header-login:hover {
+    color: var(--primary1);
+    border: 1px solid var(--primary1);
+}
+.dropdown.not-logged-in #login-container {
+    display: flex;
+}
+.dropdown.not-logged-in #header-avatar {
+    display: none;
+}
+.dropdown.not-logged-in #profile-container {
+    display: none;
+}
+.dropdown.not-logged-in #settings-container {
+    display: none;
+}
+.dropdown.not-logged-in #logout-container {
+    display: none;
+}
+
+/* HAMBURGER MENU */
+#hamburger {
+    display: none;
+    position: relative;
+    cursor: pointer;
+    appearance: none;
+    background: none;
+    outline: none;
+    padding: 12px 12px;
+    border: none;
+}
+.bar {
+    display: block;
+    background-color: var(--font1);
+    border-radius: 10px;
+    width: 24px;
+    height: 2.5px;
+    margin: 6px 0px;
+    transition: background-color 0.5s ease;
+}
+@keyframes flashClassBurger {
+    0%, 100% {
+      background-color: var(--font1);
+    }
+    50% {
+      background-color: var(--primary1);
+    }
+}
+header.class-starting-soon .bar {
+    animation: flashClassBurger 1s infinite;
+}
+
+@media screen and (max-width: 720px) {
+    #header-middle {
+        background-color: var(--background2);
+        display: flex; /* Show the dropdown when the class is active */
+        flex-direction: column;
+        position: fixed;
+        width: 82px;
+        padding: 4px 0px;
+        border-radius: 12px;
+        top: 60px;
+        left: -200px;
+        color: var(--font1);
+        transition: left 0.2s ease; /* Smooth transition for the 'right' property */
+    }
+    #header-middle.active {
+        left: 5px;
+    }
+    #search-button {
+        font-size: 22px;
+        background-color: transparent;
+    }
+    #search-dropdown-container.search-container-is-active #search-button {
+        background-color: transparent;
+    }
+    #header-logo {
+        fill: var(--primary1);
+        margin: 0px 10px 0px 14px;
+    }
+    #hamburger {
+        display: block;
+        transition: transform 0.5s ease, opacity 0.5s ease;
+        transform: rotate(0deg); /* Initial rotation state */
+    }
+    #hamburger:hover .bar {
+        background-color: var(--primary1);
+    }
+    #hamburger.active {
+        padding: 12px 11px;
+        transform: rotate(180deg);
+    }
+    #hamburger.active .bar {
+        margin: 5.5px 0px;
+    }
+    #hamburger .bar {
+        transition: transform 0.5s ease, background-color 0.2s; /* Apply transition to each bar individually */
+    }
+    #hamburger.active .bar:nth-child(1) {
+        width: 26px;
+        transform: translateY(8px) rotate(225deg);
+        background-color: var(--primary1);
+    }
+    #hamburger.active .bar:nth-child(2) {
+        width: 26px;
+        transform: rotate(225deg);
+        background-color: var(--primary1);
+    }
+    #hamburger.active .bar:nth-child(3) {
+        width: 26px;
+        transform: translateY(-8px) rotate(-405deg);
+        background-color: var(--primary1);
+    }
+    .page-link-container {
+        width: 100%;
+        justify-content: center;
+        align-items: center;
+        cursor: pointer;
+        height: 60px;
+        margin: 16px 0px;
+        border-radius: 8px;
+        transition: background-color 0.2s, color 0.2s;
+    }
+    .page-link-container:hover {
+        color: var(--primary1);
+    }
+    .tooltip {
+        font-size: 12px;
+        display: block;
+        position: relative;
+        margin-top: 5px;
+        top: 0;
+        color: var(--font1);
+    }
+    .page-link {
+        font-size: 28px;
+        padding: 2px 20px;
+        margin: 0;
+    }
+    .page-link:hover {
+        background-color: transparent;
+    }
+    .page-link:active i {
+        transform: translateY(0px);
+    }
+    .current-page-link {
+        font-size: 28px;
+        color: var(--primary1);
+        border-bottom: none;
+        padding: 0;
+        margin: 0;
+    }
+}

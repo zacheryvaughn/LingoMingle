@@ -1,0 +1,66 @@
+@font-face {
+    font-family: inter;
+    src: url(../fonts/Inter-VariableFont_slnt\,wght.ttf);
+    font-weight: 100 900;
+}
+
+:root {
+    --primary1: #1adca7;
+    --primary1-transparent: #1adca71A;
+
+    --background1: #111111;
+    --background2: #222222;
+
+    --font1: #dddddd;
+    --font2: #222222;
+
+    --highlight: #ffffff1A;
+    --shadow: #0000001A;
+
+    --transparent: #00000000;
+}
+
+* {
+    font-family: inter;
+    font-weight: 400;
+    color: var(--font1);
+}
+
+#entry-page-body {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 100vw;
+    height: 100vh;
+    background-color: var(--background1);
+    margin: 0;
+}
+
+#entry-page-logo {
+    width: 70vw;
+    max-width: 600px;
+    padding-bottom: 20px;
+    border-bottom: 1px solid var(--highlight);
+}
+
+#entry-page-title {
+    font-size: 18px;
+}
+
+#entry-page-link {
+    all: unset;
+    font-size: 20px;
+    padding: 14px 16px;
+    border: 1px solid var(--font1);
+    border-radius: 12px;
+    margin: 20px 0px 60px;
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+#entry-page-link:hover {
+    color: var(--primary1);
+    background-color: var(--highlight);
+    border-color: var(--primary1);
+}
