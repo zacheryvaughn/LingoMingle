@@ -44,7 +44,6 @@ body.theme-switch-toggled {
     overscroll-behavior: none;
     user-select: none;
     scroll-behavior: smooth;
-    transition: background-color 0.2s;
 }
 
 body {
@@ -616,6 +615,9 @@ header.class-starting-soon .bar {
 }
 
 @media screen and (max-width: 720px) {
+    #header-logo {
+        margin: 0px 8px 0px 14px;
+    }
     #header-middle {
         background-color: var(--background2);
         display: flex; /* Show the dropdown when the class is active */
@@ -638,10 +640,6 @@ header.class-starting-soon .bar {
     }
     #search-dropdown-container.search-container-is-active #search-button {
         background-color: transparent;
-    }
-    #header-logo {
-        fill: var(--primary1);
-        margin: 0px 10px 0px 14px;
     }
     #hamburger {
         display: block;
