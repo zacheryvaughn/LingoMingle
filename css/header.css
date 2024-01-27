@@ -44,6 +44,7 @@ body.theme-switch-toggled {
     overscroll-behavior: none;
     user-select: none;
     scroll-behavior: smooth;
+    transition: background-color 0.2s;
 }
 
 body {
