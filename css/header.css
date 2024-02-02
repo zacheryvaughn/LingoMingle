@@ -47,6 +47,7 @@ body.theme-switch-toggled {
 }
 
 body {
+    color: var(--font1);
     background-color: var(--background1);
     -webkit-font-smoothing: antialiased;
 }
@@ -62,9 +63,6 @@ body::-webkit-scrollbar-track {
     background-color: var(--background2); /* Set track color to transparent */
 }
 
-main {
-    color: var(--font1);
-}
 #header-container {
     height: 56px;
 }
@@ -115,7 +113,7 @@ header.class-starting-soon .fa-shapes {
 }
 
 #header-left {
-    margin-right: 35px; /* to push the header middle more towards the middle */
+    margin-right: 50px; /* to push the header middle more towards the middle */
 }
 #header-logo-link {
     display: flex;

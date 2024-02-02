@@ -1,0 +1,96 @@
+#home-main {
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    height: calc(100vh - 56px);
+}
+
+/* Courses Section */
+#home-courses {
+    display: flex;
+    flex-direction: column;
+    width: 25%;
+    height: calc(100vh - 97px);
+    border-right: 1px solid var(--highlight);
+    margin-top: 40px;
+    overflow-y: auto;
+    overflow-x: hidden;
+    scroll-behavior: smooth;
+}
+#home-courses-title {
+    position: sticky;
+    top: 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    z-index: 1;
+    background-color: var(--background1);
+    padding-bottom: 5px;
+}
+#home-courses-title h3 {
+    font-size: 24px;
+    font-weight: 600;
+}
+#view-all-courses {
+    font-size: 16px;
+    font-weight: 500;
+    color: var(--primary1);
+    margin-right: 20px;
+    border-top: 3px solid transparent;
+    border-bottom: 1px solid transparent;
+    transition: border-bottom 0.2s;
+}
+#view-all-courses:hover {
+    border-bottom: 1px solid var(--primary1);
+}
+#home-courses > :nth-child(2) {
+    margin-top: 10px;
+}
+.home-course-list-item {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    padding: 12px 0px 12px 5px;
+    transition: transform 0.2s, color 0.2s;
+}
+.home-course-list-item:hover {
+    color: var(--primary1);
+    transform: translateX(15px);
+    cursor: pointer;
+}
+.home-course-list-item i {
+    font-size: 60px;
+    margin-right: -46px;
+    opacity: 15%;
+    transition: color 0.2s;
+}
+.home-course-list-item:hover i {
+    color: var(--primary1);
+}
+.home-course-list-item p {
+    font-size: 18px;
+}
+/* Courses Section - Scroll Bar */
+#home-courses::-webkit-scrollbar {
+    width: 2px;
+}
+#home-courses::-webkit-scrollbar-thumb {
+    background-color: var(--highlight);
+    height: 30px;
+}
+
+/* Posts Section */
+#home-posts {
+    text-align: center;
+    width: 40%;
+    margin-top: 40px;
+}
+
+/* Tutors Section */
+#home-tutors {
+    text-align: center;
+    width: 25%;
+    border-left: 1px solid var(--highlight);
+    margin-top: 40px;
+}

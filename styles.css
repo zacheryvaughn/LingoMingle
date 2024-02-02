@@ -37,6 +37,10 @@
     margin: 0;
 }
 
+#entry-page-mascot {
+    width: 140px;
+}
+
 #entry-page-logo {
     width: 70vw;
     max-width: 600px;

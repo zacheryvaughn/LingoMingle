@@ -1,9 +1,8 @@
-main {
-    margin-top: 40px;
-    margin-bottom: 20px;
+#class-main {
     display: flex;
     justify-content: center;
     align-items: center;
+    height: calc(100vh - 56px);
 }
 
 /* CAMERA */
