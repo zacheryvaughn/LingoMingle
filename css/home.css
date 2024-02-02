@@ -1,3 +1,7 @@
+header {
+    z-index: 2;
+}
+
 #home-main {
     display: flex;
     justify-content: center;
