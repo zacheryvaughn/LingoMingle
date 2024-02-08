@@ -122,6 +122,7 @@ header.class-starting-soon .fa-shapes {
     margin: 0px 14px;
     height: 40px;
     width: 40px;
+    pointer-events: none;
 }
 #search-dropdown-container.search-container-is-active #search-button {
     color: var(--primary1);
@@ -147,6 +148,7 @@ header.class-starting-soon .fa-shapes {
 }
 .page-link i {
     transition: transform 0.1s ease;
+    pointer-events: none;
 }
 .current-page-link {
     color: var(--primary1);

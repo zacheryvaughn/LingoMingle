@@ -1,0 +1,19 @@
+/* Preloader styles */
+.preloader {
+    pointer-events: none;
+    z-index: 9999;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #111111;
+    opacity: 0;
+    transition: 0.2s ease;
+}
+
+.preloader.is-active {
+    pointer-events: all;
+    opacity: 1;
+    transition: 0.2s ease;
+}

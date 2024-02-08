@@ -1,14 +1,3 @@
-// Function to fetch and insert the header
-function loadHeader() {
-  fetch('../html/header.html')
-    .then(response => response.text())
-    .then(html => {
-      document.getElementById('header-container').innerHTML = html;
-      applyCurrentPageStyle(); // Call the function to apply styles for the current page
-      initializeDropdowns(); // Call the function to initialize dropdowns
-    });
-}
-
 // Function to apply styles for the current page
 function applyCurrentPageStyle() {
   const currentPage = document.querySelector('meta[name="current-page"]').getAttribute('content');
@@ -26,6 +15,30 @@ function applyCurrentPageStyle() {
 
 // Function to initialize dropdowns
 function initializeDropdowns() {
+  // Theme Toggle Switch
+  const themeSwitch = document.getElementById("theme-switch");
+  const entirePage = document.querySelector('body');
+
+  // Function to toggle theme
+  const themeSwitchToggled = () => {
+    entirePage.classList.toggle("theme-switch-toggled");
+
+    // Save theme preference in localStorage
+    var isThemeToggled = entirePage.classList.contains("theme-switch-toggled");
+    localStorage.setItem("theme", isThemeToggled ? "toggled" : "");
+  };
+
+  // Check if a theme preference is stored in localStorage
+  var storedTheme = localStorage.getItem("theme");
+  if (storedTheme === "toggled") {
+    themeSwitchToggled();
+  };
+
+  // Add click event listener
+  themeSwitch.addEventListener("click", () => {
+    themeSwitchToggled();
+  });
+
   // Hamburger
   const hamburger = document.getElementById("hamburger");
   const headerMiddle = document.getElementById("header-middle");
@@ -139,31 +152,6 @@ function initializeDropdowns() {
       closeDropdown();
     }
   });
-  
-
-  // Theme Toggle Switch
-  const themeSwitch = document.getElementById("theme-switch");
-  const entirePage = document.querySelector('body');
-
-  // Function to toggle theme
-  const themeSwitchToggled = () => {
-    entirePage.classList.toggle("theme-switch-toggled");
-
-    // Save theme preference in localStorage
-    var isThemeToggled = entirePage.classList.contains("theme-switch-toggled");
-    localStorage.setItem("theme", isThemeToggled ? "toggled" : "");
-  };
-
-  // Check if a theme preference is stored in localStorage
-  var storedTheme = localStorage.getItem("theme");
-  if (storedTheme === "toggled") {
-    themeSwitchToggled();
-  };
-
-  // Add click event listener
-  themeSwitch.addEventListener("click", () => {
-    themeSwitchToggled();
-  });
 
   // LOGIN AND LOGOUT
   const loginButton = document.getElementById("login-container");
@@ -201,13 +189,21 @@ function initializeDropdowns() {
   logoutButton.addEventListener('click', handleLoginClick);
   loginButton.addEventListener('click', handleLogoutClick);
 
-// Update UI based on initial login state
-updateUI();
+  // Update UI based on initial login state
+  updateUI();
 
 
 };
 
-// Insert Header File
-document.addEventListener('DOMContentLoaded', function () {
-  loadHeader(); // Call the function to load the header
-});
+// Function to fetch and insert the header
+function loadHeader() {
+  fetch('../html/header.html')
+    .then(response => response.text())
+    .then(html => {
+      document.getElementById('header-container').innerHTML = html;
+      applyCurrentPageStyle(); // Call the function to apply styles for the current page
+      initializeDropdowns(); // Call the function to initialize dropdowns
+    });
+}
+
+loadHeader(); // Call the function to load the header
