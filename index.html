@@ -6,14 +6,41 @@
         <meta name="keywords" content="">
         <meta name="description" content="">
         <title></title>
-        <link rel="icon" href="images/LogoSemiRoundBlueSmall.png">
+        <link rel="icon" href="images/favicon.png">
         <link rel="stylesheet" href="styles.css">
+        <script src="https://kit.fontawesome.com/1df6dff833.js" crossorigin="anonymous"></script>
     </head>
-    <body id="entry-page-body">
-        <img id="entry-page-mascot" src="images/mascot.png" alt="raccoon mascot logo">
-        <img id="entry-page-logo" src="images/fulltitle-simple.png" alt="L M, Lingo Mingle logo.">
-        <H3 id="entry-page-title">Lingomingle is a social tutoring platform.
-        </H3>
-        <a id="entry-page-link" href="html/home.html">View Demo</a>
+    <body>
+        <header>
+            <div id="header-left">
+                <img src="images/logo.png" alt="site logo" id="logo">
+                <h1>LingoMingle</h1>
+            </div>
+            <div id="header-right">
+                <div id="gender">
+                    <img src="images/gender.png" alt="gender icon" id="gender-icon">
+                    <h4>Gender</h4>
+                </div>
+                <div id="region">
+                    <img src="images/region.png" alt="region icon" id="region-icon">
+                    <h4>Region</h4>
+                </div>
+            </div>
+        </header>
+        <main>
+            <div id="main-left">
+                <video id="incoming-feed" autoplay></video>
+                <video id="outgoing-feed" autoplay muted></video>
+            </div>
+            <div id="main-right">
+                <div id="message-feed-container">
+                </div>
+                <textarea id="message-input" placeholder="What's up stranger?" rows="1"></textarea>
+            </div>
+        </main>
+        <footer>
+            
+        </footer>
+        <script src="js/camfeed.js"></script>
     </body>
 </html>

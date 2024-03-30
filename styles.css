@@ -1,70 +1,179 @@
+/* FONTS */
 @font-face {
     font-family: inter;
-    src: url(../fonts/Inter-VariableFont_slnt\,wght.ttf);
+    src: url('fonts/Inter-Var.ttf') format('truetype');
     font-weight: 100 900;
 }
 
+/* COLORS */
 :root {
-    --primary1: #1adca7;
-    --primary1-transparent: #1adca71A;
+    --primary1A: #07f;
+    --primary1B: #06c;
 
-    --background1: #111111;
-    --background2: #222222;
+    --gradient1: #ffca9a;
+    --gradient2: #ff88bb;
+    --gradient3: #b777ff;
 
-    --font1: #dddddd;
-    --font2: #222222;
-
-    --highlight: #ffffff1A;
-    --shadow: #0000001A;
-
-    --transparent: #00000000;
+    --bg0: #0a0a0a;
+    --bg1: #1a1a1a;
+    --bg2: #2a2a2a;
+    --bg3: #3a3a3a;
+    --bg4: #4a4a4a;
+    --bg5: #5a5a5a;
+    --ft1: #eee;
 }
 
+.light-theme {
+    --bg1: #eee;
+    --ft1: #111;
+}
+
+/* NORMALIZE */
 * {
-    font-family: inter;
-    font-weight: 400;
-    color: var(--font1);
-}
+    /* font */
+    font-family: Helvetica, Arial, sans-serif;
+    font-weight: 600;
+    color: var(--ft1);
+    -webkit-font-smoothing: antialiased;
 
-#entry-page-body {
+    /* sizing */
+    box-sizing: border-box;
+    padding: 0;
+    margin: 0;
+
+    /* mouse */
+    -webkit-scroll-behavior: smooth;
+    scroll-behavior: smooth;
+    overscroll-behavior: none;
+    user-select: none;
+}
+html, body {
+    overflow-x: hidden;
+    height: 100vh;
+}
+body {
     display: flex;
     flex-direction: column;
-    justify-content: center;
     align-items: center;
-    width: 100vw;
-    height: 100vh;
-    background-color: var(--background1);
-    margin: 0;
+    justify-content: flex-start;
+    background-color: var(--bg0);
 }
-
-#entry-page-mascot {
-    width: 140px;
-}
-
-#entry-page-logo {
-    width: 70vw;
-    max-width: 600px;
-    padding-bottom: 20px;
-    border-bottom: 1px solid var(--highlight);
-}
-
-#entry-page-title {
-    font-size: 18px;
-}
-
-#entry-page-link {
+a, li {
     all: unset;
-    font-size: 20px;
-    padding: 14px 16px;
-    border: 1px solid var(--font1);
-    border-radius: 12px;
-    margin: 20px 0px 60px;
-    cursor: pointer;
-    transition: 0.2s;
 }
 
-#entry-page-link:hover {
-    color: var(--primary1);
-    background-color: var(--highlight);
-    border-color: var(--primary1);
+/* HEADER */
+header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    height: 80px;
+    padding: 0px 40px;
+    background-color: var(--bg0);
+    border-bottom: 1px solid var(--bg2);
+}
+
+#header-left {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+}
+
+#logo {
+    height: 48px;
+}
+
+#header-right {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 19px;
+}
+
+#gender, #region {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 14px;
+    height: 42px;
+    padding: 0px 16px;
+    background-color: var(--bg2);
+    border: 1px solid var(--bg3);
+    border-radius: 13px;
+    transition: background-color 0.15s;
+    cursor: pointer;
+}
+
+#gender:hover, #region:hover {
+    background-color: var(--bg1);
+}
+
+#gender:active, #region:active {
+    background-color: var(--bg1);
+    border: 1px solid var(--bg5);
+}
+
+#gender-icon {
+    width: 24px;
+}
+
+#region-icon {
+    width: 20px;
+}
+
+/* MAIN */
+main {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    gap: 20px;
+    height: calc(100% - 80px);
+    width: calc(100% - 40px);
+}
+
+#main-left {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    height: 100%;
+}
+
+video {
+    border-radius: 12px;
+    height: calc(50% - 25px); /* they each take up half the main-left - 1/2 the gap plus 10px space above and below */
+}
+
+#main-right {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-end;
+    background-color: var(--bg1);
+    height: calc(100% - 40px);
+    width: 100%;
+    max-width: 640px;
+    border-radius: 12px;
+}
+
+#message-input {
+    font-size: 1.2rem;
+    font-weight: 200;
+    resize: none;
+    width: calc(100% - 60px);
+    max-height: 100px;
+    padding: 16px;
+    background-color: var(--bg2);
+    box-sizing: border-box;
+    border: none;
+    margin-bottom: 30px;
+    overflow-y: auto;
+}
+
+#message-input:focus {
+    outline: var(--bg3) solid 1px;
 }
