@@ -241,7 +241,7 @@ video {
     overflow-y: scroll;
 }
 
-.message {
+.outgoing-message {
     font-weight: 500;
     font-size: 1.1rem;
     position: relative;
@@ -249,7 +249,7 @@ video {
     max-width: 70%;
     word-wrap: break-word;
     overflow-wrap: break-word;
-    margin: 20px 20px 20px auto;
+    margin: 12px 20px 12px auto;
     padding: 10px 15px;
     background-color: var(--primary1A); /* Blue background color */
     color: white; /* Text color */
