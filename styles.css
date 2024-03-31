@@ -24,8 +24,13 @@
 }
 
 .light-theme {
-    --bg1: #eee;
-    --ft1: #111;
+    --bg0: #fafafa;
+    --bg1: #eaeaea;
+    --bg2: #dadada;
+    --bg3: #cacaca;
+    --bg4: #bababa;
+    --bg5: #aaaaaa;
+    --ft1: #222;
 }
 
 /* NORMALIZE */
@@ -46,7 +51,17 @@
     scroll-behavior: smooth;
     overscroll-behavior: none;
     user-select: none;
+    -webkit-user-select: none; /* For older versions of Safari */
+    -moz-user-select: none; /* For older versions of Firefox */
+    -ms-user-select: none; /* For Internet Explorer */
+
+    scrollbar-color: transparent transparent;
 }
+::-webkit-scrollbar, ::-webkit-scrollbar-thumb, ::-webkit-scrollbar-track {
+    background-color: transparent;
+    width: 0;
+}
+
 html, body {
     overflow-x: hidden;
     height: 100vh;
@@ -57,6 +72,7 @@ body {
     align-items: center;
     justify-content: flex-start;
     background-color: var(--bg0);
+    transition: background-color 0.3s, border 0.3s;
 }
 a, li {
     all: unset;
@@ -68,10 +84,11 @@ header {
     align-items: center;
     justify-content: space-between;
     width: 100%;
-    height: 80px;
+    height: 68px;
     padding: 0px 40px;
     background-color: var(--bg0);
     border-bottom: 1px solid var(--bg2);
+    transition: 0.3s;
 }
 
 #header-left {
@@ -102,12 +119,13 @@ header {
     background-color: var(--bg2);
     border: 1px solid var(--bg3);
     border-radius: 13px;
-    transition: background-color 0.15s;
+    transition: background-color 0.2s, border 0.2s;
     cursor: pointer;
 }
 
 #gender:hover, #region:hover {
     background-color: var(--bg1);
+    transition: background-color 0.15s, border 0s;
 }
 
 #gender:active, #region:active {
@@ -123,6 +141,13 @@ header {
     width: 20px;
 }
 
+#theme-switch {
+    font-size: 22px;
+    padding: 12px;
+    margin: -12px;
+    cursor: pointer;
+}
+
 /* MAIN */
 main {
     display: flex;
@@ -130,7 +155,7 @@ main {
     align-items: center;
     justify-content: center;
     gap: 20px;
-    height: calc(100% - 80px);
+    height: calc(100% - 70px);
     width: calc(100% - 40px);
 }
 
@@ -141,11 +166,13 @@ main {
     justify-content: center;
     gap: 10px;
     height: 100%;
+    width: fit-content;
 }
 
 video {
-    border-radius: 12px;
+    border-radius: 22px;
     height: calc(50% - 25px); /* they each take up half the main-left - 1/2 the gap plus 10px space above and below */
+
 }
 
 #main-right {
@@ -157,23 +184,70 @@ video {
     height: calc(100% - 40px);
     width: 100%;
     max-width: 640px;
-    border-radius: 12px;
+    border-radius: 22px;
+    border: 1px solid var(--bg2);
+    transition: background-color 0.3s, border 0.3s;
+}
+
+#message-input-container {
+    position: relative; /* Add relative positioning */
+    display: flex;
+    flex-direction: column; /* Ensure flex items stack vertically */
+    width: calc(100% - 40px);
+    margin-bottom: 20px;
 }
 
 #message-input {
     font-size: 1.2rem;
     font-weight: 200;
     resize: none;
-    width: calc(100% - 60px);
-    max-height: 100px;
-    padding: 16px;
+    width: 100%;
+    max-height: 200px;
+    padding: 16px 68px 16px 16px; /* Adjust padding to accommodate send button */
     background-color: var(--bg2);
     box-sizing: border-box;
     border: none;
-    margin-bottom: 30px;
-    overflow-y: auto;
+    border-radius: 10px;
+    overflow-x: hidden;
+    transition: height 0.2s, background-color 0.3s, border 0.3s;; /* Add transition for smooth height change */
 }
 
 #message-input:focus {
     outline: var(--bg3) solid 1px;
+}
+
+#send-button {
+    position: absolute; /* Position the send button absolutely */
+    bottom: -25px; /* Center vertically */
+    right: 10px; /* Adjust the distance from the right side */
+    transform: translateY(-50%); /* Adjust vertical alignment */
+    height: 52px;
+    padding: 6px;
+    cursor: pointer;
+    transition: right 0.1s;
+}
+
+#send-button:hover {
+    right: 8px;
+}
+
+#send-button:active {
+    right: 4px;
+}
+
+#message-feed-container {
+    width: calc(100% + 25px); /* add the scroll bar width to normalize the size */
+    overflow-y: scroll;
+}
+
+.message {
+    font-weight: 500;
+    font-size: 1.1rem;
+    position: relative;
+    width: fit-content;
+    margin: 20px 20px 20px auto;
+    padding: 10px 15px;
+    background-color: var(--primary1A); /* Blue background color */
+    color: white; /* Text color */
+    border-radius: 100px 100px 0px 100px;
 }

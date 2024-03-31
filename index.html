@@ -18,13 +18,14 @@
             </div>
             <div id="header-right">
                 <div id="gender">
-                    <img src="images/gender.png" alt="gender icon" id="gender-icon">
+                    <img src="images/gender.png" alt="gender button" id="gender-icon">
                     <h4>Gender</h4>
                 </div>
                 <div id="region">
-                    <img src="images/region.png" alt="region icon" id="region-icon">
+                    <img src="images/region.png" alt="region button" id="region-icon">
                     <h4>Region</h4>
                 </div>
+                <i id="theme-switch" class="fa-solid fa-circle-half-stroke"></i>
             </div>
         </header>
         <main>
@@ -35,12 +36,17 @@
             <div id="main-right">
                 <div id="message-feed-container">
                 </div>
-                <textarea id="message-input" placeholder="What's up stranger?" rows="1"></textarea>
+                <div id="message-input-container">
+                    <textarea id="message-input" placeholder="What's up stranger?" rows="1"></textarea>
+                    <img src="images/send.png" alt="send button" id="send-button">
+                </div>
             </div>
         </main>
         <footer>
             
         </footer>
+        <script src="js/header.js"></script>
         <script src="js/camfeed.js"></script>
+        <script src="js/messages.js"></script>
     </body>
 </html>
