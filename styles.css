@@ -204,6 +204,7 @@ video {
     width: 100%;
     max-height: 200px;
     padding: 16px 68px 16px 16px; /* Adjust padding to accommodate send button */
+    margin-top: 20px;
     background-color: var(--bg2);
     box-sizing: border-box;
     border: none;
@@ -245,9 +246,16 @@ video {
     font-size: 1.1rem;
     position: relative;
     width: fit-content;
+    max-width: 70%;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
     margin: 20px 20px 20px auto;
     padding: 10px 15px;
     background-color: var(--primary1A); /* Blue background color */
     color: white; /* Text color */
-    border-radius: 100px 100px 0px 100px;
+    border-radius: 20px 20px 0px 20px;
+}
+.safari #message-feed-container {
+    width: calc(100% - 10px); /* add the scroll bar width to normalize the size */
+    overflow-y: scroll;
 }

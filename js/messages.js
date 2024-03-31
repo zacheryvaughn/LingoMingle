@@ -35,14 +35,15 @@ document.addEventListener("DOMContentLoaded", function() {
     });
 
     // Function to send the message
+    // Function to send the message
     function sendMessage() {
-        var message = messageInput.value.trim(); // Get the trimmed value of the text area
-        if (message !== "") {
+        var outgoingMessage = messageInput.value; // Get the value of the text area without trimming
+        if (outgoingMessage.trim() !== "") {
             // Create a new message element
             var messageElement = document.createElement("div");
             messageElement.classList.add("message");
-            messageElement.textContent = message;
-            
+            // Set the message content as HTML to preserve line breaks and spaces
+            messageElement.innerHTML = outgoingMessage.replace(/\n/g, '<br>'); // Replace newline characters with <br> tags
             // Append the message element to the message feed container
             messageFeedContainer.appendChild(messageElement);
 
@@ -51,8 +52,19 @@ document.addEventListener("DOMContentLoaded", function() {
 
             // Clear the text area after sending the message
             messageInput.value = "";
+
+            // Reset the text area's height to its default value
+            messageInput.style.height = ""; // Reset height to default (auto)
         }
     }
 
 });
 
+// check for safari to modify message margins
+function isSafari() {
+    return /^((?!chrome|android).)*safari/i.test(navigator.userAgent);
+}
+// Check if the browser is Safari and add a class to the body if it is
+if (isSafari()) {
+    document.body.classList.add('safari');
+}
