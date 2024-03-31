@@ -34,11 +34,18 @@
                 <video id="outgoing-feed" autoplay muted></video>
             </div>
             <div id="main-right">
-                <div id="message-feed-container">
+                <div id="messaging-container">
+                    <div id="message-feed-container">
+                    </div>
+                    <div id="message-input-container">
+                        <textarea id="message-input" placeholder="What's up stranger?" rows="1"></textarea>
+                        <img src="images/send.png" alt="send button" id="send-button">
+                    </div>
                 </div>
-                <div id="message-input-container">
-                    <textarea id="message-input" placeholder="What's up stranger?" rows="1"></textarea>
-                    <img src="images/send.png" alt="send button" id="send-button">
+                <div id="connection-controls">
+                    <div id="report"><i class="fa-solid fa-triangle-exclamation"></i></div>
+                    <div id="connect"><i class="fa-solid fa-circle-nodes"></i><h4>Connect</h4></div>
+                    <div id="skip"><i class="fa-solid fa-arrow-right"></i><h4>Skip</h4></div>
                 </div>
             </div>
         </main>
