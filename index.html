@@ -1,59 +1,217 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <meta name="keywords" content="">
-        <meta name="description" content="">
-        <title></title>
-        <link rel="icon" href="images/favicon.png">
-        <link rel="stylesheet" href="styles.css">
-        <script src="https://kit.fontawesome.com/1df6dff833.js" crossorigin="anonymous"></script>
-    </head>
-    <body>
-        <header>
-            <div id="header-left">
-                <img src="images/logo.png" alt="site logo" id="logo">
-                <h1>LingoMingle</h1>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="keywords" content="" />
+    <meta name="description" content="" />
+    <title></title>
+    <link rel="icon" href="images/logo.png" />
+    <link rel="stylesheet" href="styles.css" />
+    <link rel="stylesheet" href="squishyblob.css" />
+    <script src="http://localhost:3000/socket.io/socket.io.js"></script>
+    <script
+      src="https://kit.fontawesome.com/1df6dff833.js"
+      crossorigin="anonymous"
+    ></script>
+  </head>
+
+  <body>
+    <header>
+      <div id="header-left">
+        <img src="images/logo.png" alt="site logo" id="logo" />
+        <h1>LingoMingle</h1>
+      </div>
+      <div id="header-right">
+        <div id="side-switch">
+          <p>•</p>
+          <p>|</p>
+          <p>•</p>
+        </div>
+        <div id="room-button">
+          <svg
+            id="room-icon"
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 640 512"
+          >
+            <!--!Font Awesome Free 6.5.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.-->
+            <path
+              d="M64 64a64 64 0 1 1 128 0A64 64 0 1 1 64 64zM25.9 233.4C29.3 191.9 64 160 105.6 160h44.8c27 0 51 13.4 65.5 34.1c-2.7 1.9-5.2 4-7.5 6.3l-64 64c-21.9 21.9-21.9 57.3 0 79.2L192 391.2V464c0 26.5-21.5 48-48 48H112c-26.5 0-48-21.5-48-48V348.3c-26.5-9.5-44.7-35.8-42.2-65.6l4.1-49.3zM448 64a64 64 0 1 1 128 0A64 64 0 1 1 448 64zM431.6 200.4c-2.3-2.3-4.9-4.4-7.5-6.3c14.5-20.7 38.6-34.1 65.5-34.1h44.8c41.6 0 76.3 31.9 79.7 73.4l4.1 49.3c2.5 29.8-15.7 56.1-42.2 65.6V464c0 26.5-21.5 48-48 48H496c-26.5 0-48-21.5-48-48V391.2l47.6-47.6c21.9-21.9 21.9-57.3 0-79.2l-64-64zM272 240v32h96V240c0-9.7 5.8-18.5 14.8-22.2s19.3-1.7 26.2 5.2l64 64c9.4 9.4 9.4 24.6 0 33.9l-64 64c-6.9 6.9-17.2 8.9-26.2 5.2s-14.8-12.5-14.8-22.2V336H272v32c0 9.7-5.8 18.5-14.8 22.2s-19.3 1.7-26.2-5.2l-64-64c-9.4-9.4-9.4-24.6 0-33.9l64-64c6.9-6.9 17.2-8.9 26.2-5.2s14.8 12.5 14.8 22.2z"
+            />
+          </svg>
+          <h4>Room</h4>
+        </div>
+        <div id="region-button">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+            <!--!Font Awesome Free 6.5.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.-->
+            <path
+              d="M57.7 193l9.4 16.4c8.3 14.5 21.9 25.2 38 29.8L163 255.7c17.2 4.9 29 20.6 29 38.5v39.9c0 11 6.2 21 16 25.9s16 14.9 16 25.9v39c0 15.6 14.9 26.9 29.9 22.6c16.1-4.6 28.6-17.5 32.7-33.8l2.8-11.2c4.2-16.9 15.2-31.4 30.3-40l8.1-4.6c15-8.5 24.2-24.5 24.2-41.7v-8.3c0-12.7-5.1-24.9-14.1-33.9l-3.9-3.9c-9-9-21.2-14.1-33.9-14.1H257c-11.1 0-22.1-2.9-31.8-8.4l-34.5-19.7c-4.3-2.5-7.6-6.5-9.2-11.2c-3.2-9.6 1.1-20 10.2-24.5l5.9-3c6.6-3.3 14.3-3.9 21.3-1.5l23.2 7.7c8.2 2.7 17.2-.4 21.9-7.5c4.7-7 4.2-16.3-1.2-22.8l-13.6-16.3c-10-12-9.9-29.5 .3-41.3l15.7-18.3c8.8-10.3 10.2-25 3.5-36.7l-2.4-4.2c-3.5-.2-6.9-.3-10.4-.3C163.1 48 84.4 108.9 57.7 193zM464 256c0-36.8-9.6-71.4-26.4-101.5L412 164.8c-15.7 6.3-23.8 23.8-18.5 39.8l16.9 50.7c3.5 10.4 12 18.3 22.6 20.9l29.1 7.3c1.2-9 1.8-18.2 1.8-27.5zM0 256a256 256 0 1 1 512 0A256 256 0 1 1 0 256z"
+            />
+          </svg>
+          <h4>Region</h4>
+        </div>
+        <svg
+          id="theme-switch"
+          xmlns="http://www.w3.org/2000/svg"
+          viewBox="0 0 512 512"
+        >
+          <!--!Font Awesome Free 6.5.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.-->
+          <path
+            d="M448 256c0-106-86-192-192-192V448c106 0 192-86 192-192zM0 256a256 256 0 1 1 512 0A256 256 0 1 1 0 256z"
+          />
+        </svg>
+      </div>
+    </header>
+    <main>
+      <div id="room-dropdown">
+        <input
+          type="text"
+          name=""
+          id="room-id-input"
+          placeholder="Room ID..."
+        />
+        <div id="create-join-container">
+          <div id="create-room">Create</div>
+          <div id="join-room">Join</div>
+        </div>
+      </div>
+      <div id="region-dropdown">
+        <div class="region-option">
+          <h6>Global</h6>
+          <input
+            type="checkbox"
+            id="global-checkbox"
+            class="region-checkbox"
+            checked
+          />
+        </div>
+        <div class="region-option">
+          <h6>Asia</h6>
+          <input type="checkbox" id="Asia-checkbox" class="region-checkbox" />
+        </div>
+        <div class="region-option">
+          <h6>Africa</h6>
+          <input type="checkbox" id="Africa-checkbox" class="region-checkbox" />
+        </div>
+        <div class="region-option">
+          <h6>Europe</h6>
+          <input type="checkbox" id="Europe-checkbox" class="region-checkbox" />
+        </div>
+        <div class="region-option">
+          <h6>North America</h6>
+          <input
+            type="checkbox"
+            id="North America-checkbox"
+            class="region-checkbox"
+          />
+        </div>
+        <div class="region-option">
+          <h6>South America</h6>
+          <input
+            type="checkbox"
+            id="South America-checkbox"
+            class="region-checkbox"
+          />
+        </div>
+        <div class="region-option">
+          <h6>Australia</h6>
+          <input
+            type="checkbox"
+            id="Australia-checkbox"
+            class="region-checkbox"
+          />
+        </div>
+      </div>
+
+      <!-- MAIN CONTENT -->
+      <div id="main-left">
+        <video id="incoming-feed" autoplay></video>
+        <video id="outgoing-feed" autoplay muted></video>
+      </div>
+      <div id="main-right">
+        <div id="messaging-container">
+            <div id="blob-container">
+              <svg
+                id="target-blob"
+                width="100%"
+                height="100%"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <g>
+                  <path id="blob-path" fill="var(--blobBlue)" d=""></path>
+                </g>
+              </svg>
             </div>
-            <div id="header-right">
-                <div id="gender">
-                    <img src="images/gender.png" alt="gender button" id="gender-icon">
-                    <h4>Gender</h4>
-                </div>
-                <div id="region">
-                    <img src="images/region.png" alt="region button" id="region-icon">
-                    <h4>Region</h4>
-                </div>
-                <i id="theme-switch" class="fa-solid fa-circle-half-stroke"></i>
-            </div>
-        </header>
-        <main>
-            <div id="main-left">
-                <video id="incoming-feed" autoplay></video>
-                <video id="outgoing-feed" autoplay muted></video>
-            </div>
-            <div id="main-right">
-                <div id="messaging-container">
-                    <div id="message-feed-container">
-                    </div>
-                    <div id="message-input-container">
-                        <textarea id="message-input" placeholder="What's up stranger?" rows="1"></textarea>
-                        <img src="images/send.png" alt="send button" id="send-button">
-                    </div>
-                </div>
-                <div id="connection-controls">
-                    <div id="report"><i class="fa-solid fa-triangle-exclamation"></i></div>
-                    <div id="connect"><i class="fa-solid fa-circle-nodes"></i><h4>Connect</h4></div>
-                    <div id="skip"><i class="fa-solid fa-arrow-right"></i><h4>Skip</h4></div>
-                </div>
-            </div>
-        </main>
-        <footer>
-            
-        </footer>
-        <script src="js/header.js"></script>
-        <script src="js/camfeed.js"></script>
-        <script src="js/messages.js"></script>
-    </body>
+            <div id="blob-blur-cover"></div>
+          <div id="status-bar">
+            <p id="online-user-count">Online Users: <span id="online-user-count-span"></span></p>
+            <p id="connection-status">Connection Status: <span id="connection-status-span"></span></p>
+          </div>
+          <div id="message-feed-container"></div>
+          <div id="message-input-container">
+            <textarea
+              id="message-input"
+              placeholder="What's up stranger?"
+              rows="1"
+            ></textarea>
+            <svg
+              id="send-button"
+              xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 512 512"
+            >
+              <!--!Font Awesome Free 6.5.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.-->
+              <path
+                d="M498.1 5.6c10.1 7 15.4 19.1 13.5 31.2l-64 416c-1.5 9.7-7.4 18.2-16 23s-18.9 5.4-28 1.6L284 427.7l-68.5 74.1c-8.9 9.7-22.9 12.9-35.2 8.1S160 493.2 160 480V396.4c0-4 1.5-7.8 4.2-10.7L331.8 202.8c5.8-6.3 5.6-16-.4-22s-15.7-6.4-22-.7L106 360.8 17.7 316.6C7.1 311.3 .3 300.7 0 288.9s5.9-22.8 16.1-28.7l448-256c10.7-6.1 23.9-5.5 34 1.4z"
+              />
+            </svg>
+          </div>
+        </div>
+        <div id="connection-controls">
+          <div id="report-button">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+              <!--!Font Awesome Free 6.5.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.-->
+              <path
+                d="M256 32c14.2 0 27.3 7.5 34.5 19.8l216 368c7.3 12.4 7.3 27.7 .2 40.1S486.3 480 472 480H40c-14.3 0-27.6-7.7-34.7-20.1s-7-27.8 .2-40.1l216-368C228.7 39.5 241.8 32 256 32zm0 128c-13.3 0-24 10.7-24 24V296c0 13.3 10.7 24 24 24s24-10.7 24-24V184c0-13.3-10.7-24-24-24zm32 224a32 32 0 1 0 -64 0 32 32 0 1 0 64 0z"
+              />
+            </svg>
+          </div>
+          <div id="pair-button">
+            <svg
+              class="fa-play"
+              xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 384 512"
+            >
+              <!--!Font Awesome Free 6.5.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.-->
+              <path
+                d="M73 39c-14.8-9.1-33.4-9.4-48.5-.9S0 62.6 0 80V432c0 17.4 9.4 33.4 24.5 41.9s33.7 8.1 48.5-.9L361 297c14.3-8.7 23-24.2 23-41s-8.7-32.2-23-41L73 39z"
+              />
+            </svg>
+            <svg
+              class="fa-pause hidden"
+              xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 320 512"
+            >
+              <!--!Font Awesome Free 6.5.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.-->
+              <path
+                d="M48 64C21.5 64 0 85.5 0 112V400c0 26.5 21.5 48 48 48H80c26.5 0 48-21.5 48-48V112c0-26.5-21.5-48-48-48H48zm192 0c-26.5 0-48 21.5-48 48V400c0 26.5 21.5 48 48 48h32c26.5 0 48-21.5 48-48V112c0-26.5-21.5-48-48-48H240z"
+              />
+            </svg>
+            <h4>Start</h4>
+          </div>
+          <div id="skip-button">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512">
+              <!--!Font Awesome Free 6.5.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.-->
+              <path
+                d="M438.6 278.6c12.5-12.5 12.5-32.8 0-45.3l-160-160c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3L338.8 224 32 224c-17.7 0-32 14.3-32 32s14.3 32 32 32l306.7 0L233.4 393.4c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0l160-160z"
+              />
+            </svg>
+            <h4>Skip</h4>
+          </div>
+        </div>
+      </div>
+    </main>
+    <footer></footer>
+    <script src="squishyblob.js"></script>
+    <script src="client.js"></script>
+  </body>
 </html>

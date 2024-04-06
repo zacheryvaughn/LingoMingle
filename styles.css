@@ -1,40 +1,45 @@
-/* FONTS */
 @font-face {
-    font-family: inter;
-    src: url('fonts/Inter-Var.ttf') format('truetype');
-    font-weight: 100 900;
+    font-family: 'Cakecafe';
+    src: url('fonts/Cakecafe.otf') format('opentype');
 }
 
 /* COLORS */
 :root {
-    --primary1A: #07f;
-    --primary1B: #06c;
-
-    --logoblue: #5EA3EF;
-
-    --warning1: #FF6347;
-
-    --gradient1: #ffca9a;
-    --gradient2: #ff88bb;
-    --gradient3: #b777ff;
+    --primary: rgb(58, 206, 255);
+    --blobBlue: rgb(25, 146, 186);
+    --warningOrange: #ff5b3e;
+    --outgoingMessage: rgb(0, 165, 220);
 
     --bg0: #0a0a0a;
     --bg1: #1a1a1a;
+    --bg1trans: #1a1a1a99;
     --bg2: #2a2a2a;
     --bg3: #3a3a3a;
     --bg4: #4a4a4a;
     --bg5: #5a5a5a;
-    --ft1: #eee;
+
+    --ftBase: #eee;
+    --ftBlue: #DFF7FF;
+
+    --shadow: #00000066;
 }
 
 .light-theme {
+    --primary: rgb(0, 159, 216);
+    --blobBlue: rgb(0, 149, 198);
+
     --bg0: #fafafa;
     --bg1: #eaeaea;
+    --bg1trans: #eaeaea99;
     --bg2: #dadada;
     --bg3: #cacaca;
     --bg4: #bababa;
     --bg5: #aaaaaa;
-    --ft1: #222;
+
+    --ftBase: #222;
+    --ftBlue: #3bb3e3;
+
+    --shadow: #00000022;
 }
 
 /* NORMALIZE */
@@ -42,7 +47,7 @@
     /* font */
     font-family: Helvetica, Arial, sans-serif;
     font-weight: 600;
-    color: var(--ft1);
+    color: var(--ftBase);
     -webkit-font-smoothing: antialiased;
 
     /* sizing */
@@ -60,6 +65,7 @@
     -ms-user-select: none; /* For Internet Explorer */
 
     scrollbar-color: transparent transparent;
+    transition: background-color 0.2s, border 0.2s;
 }
 ::-webkit-scrollbar, ::-webkit-scrollbar-thumb, ::-webkit-scrollbar-track {
     background-color: transparent;
@@ -76,7 +82,7 @@ body {
     align-items: center;
     justify-content: flex-start;
     background-color: var(--bg0);
-    transition: background-color 0.3s, border 0.3s;
+    overflow: hidden;
 }
 a, li {
     all: unset;
@@ -84,15 +90,18 @@ a, li {
 
 /* HEADER */
 header {
+    z-index: 4;
+    position: absolute;
     display: flex;
     align-items: center;
     justify-content: space-between;
     width: 100%;
+    min-width: 680px;
     height: 68px;
-    padding: 0px 40px;
+    min-height: 68px;
+    padding: 0px 40px 0px 32px;
     background-color: var(--bg0);
     border-bottom: 1px solid var(--bg2);
-    transition: 0.3s;
 }
 
 #header-left {
@@ -102,8 +111,13 @@ header {
     gap: 10px;
 }
 
+#header-left h1 {
+    font-family: Cakecafe, sans-serif;
+    color: var(--ftBlue);
+}
+
 #logo {
-    height: 48px;
+    height: 46px;
 }
 
 #header-right {
@@ -113,7 +127,34 @@ header {
     gap: 19px;
 }
 
-#gender, #region {
+#side-switch {
+    display: flex;
+    font-size: 1.5rem;
+    padding: 12px;
+    margin: -12px;
+    cursor: pointer;
+}
+
+#side-switch p {
+    transition: opacity 0.2s;
+}
+#side-switch p:first-of-type {
+    margin-right: 1px;
+}
+#side-switch.hide-right p:last-of-type {
+    opacity: 0;
+}
+#side-switch.hide-left p:first-of-type {
+    opacity: 0;
+}
+#main-left.hide {
+    display: none;
+}
+#main-right.hide {
+    display: none;
+}
+
+#room-button, #region-button {
     display: flex;
     align-items: center;
     justify-content: center;
@@ -123,32 +164,131 @@ header {
     background-color: var(--bg2);
     border: 1px solid var(--bg3);
     border-radius: 13px;
-    transition: background-color 0.2s, border 0.2s;
     cursor: pointer;
 }
 
-#gender:hover, #region:hover, #report:hover, #connect:hover, #skip:hover {
+#room-button:hover, #region-button:hover, #create-room:hover, #join-room:hover, #report-button:hover, #pair-button:hover, #skip-button:hover {
     background-color: var(--bg1);
     transition: background-color 0.15s, border 0s;
 }
 
-#gender:active, #region:active, #report:active, #connect:active, #skip:active {
+#room-button:active, #region-button:active, #room-button.active, #region-button.active, #create-room:active, #join-room:active, #report-button:active, #pair-button:active, #skip-button:active {
     background-color: var(--bg1);
     border: 1px solid var(--bg5);
 }
 
-#gender-icon {
-    width: 24px;
+#room-icon {
+    width: 1.6rem;
+    fill: var(--primary);
 }
 
-#region-icon {
-    width: 20px;
+#region-button svg {
+    width: 1.2rem;
+    fill: var(--primary);
+    background-color: greenyellow;
+    box-sizing: content-box;
+    border-radius: 20px;
+}
+
+#room-dropdown {
+    z-index: 2;
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    top: -120px;
+    right: 160px;
+    background-color: var(--bg0);
+    border: 1px solid var(--bg2);
+    border-top: none;
+    border-radius: 0px 0px 14px 14px;
+    box-shadow: 0px 2px 8px 0px var(--shadow);
+    transition: top 0.2s ease-in, background-color 0.2s, border 0.2s, box-shadow 0.2s;
+}
+#room-dropdown.active, #region-dropdown.active {
+    z-index: 3;
+    top: 67px;
+}
+#room-id-input {
+    font-size: 1rem;
+    font-weight: 200;
+    resize: none;
+    padding: 12px;
+    margin: 12px 12px 6px 12px;
+    background-color: var(--bg2);
+    box-sizing: border-box;
+    border: none;
+    border-radius: 6px;
+    overflow-x: hidden;
+}
+#room-id-input:focus {
+    outline: var(--bg3) solid 1px;
+}
+#create-join-container {
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+    gap: 6px;
+    width: 100%;
+    padding: 0px 12px 12px 12px;
+}
+#create-room, #join-room {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 50%;
+    height: 40px;
+    background-color: var(--bg2);
+    border-radius: 6px;
+    border: 1px solid var(--bg3);
+    cursor: pointer;
+}
+
+#region-dropdown {
+    z-index: 2;
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    top: -360px;
+    right: 20px;
+    width: 240px;
+    background-color: var(--bg0);
+    border: 1px solid var(--bg2);
+    border-top: none;
+    border-radius: 0px 0px 14px 14px;
+    box-shadow: 0px 2px 8px 0px var(--shadow);
+    transition: top 0.2s ease-in, background-color 0.2s, border 0.2s, box-shadow 0.2s;
+}
+.region-option {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    font-size: 1.4rem;
+    width: 100%;
+    height: 50px;
+    padding: 0px 20px;
+    border-bottom: 1px solid var(--bg1);
+}
+.region-option:first-of-type {
+    background-color: var(--bg1);
+    border-bottom: 1px solid var(--bg2);
+}
+.region-option:last-of-type {
+    border-bottom: none;
+}
+.region-option input {
+    transform: scale(1.2);
 }
 
 #theme-switch {
-    font-size: 22px;
-    padding: 12px;
-    margin: -12px;
+    height: 38px;
+    fill: var(--ftBase);
+    padding: 8px;
+    margin: -8px;
     cursor: pointer;
 }
 
@@ -159,8 +299,11 @@ main {
     align-items: center;
     justify-content: center;
     gap: 20px;
-    height: calc(100% - 70px);
-    width: calc(100% - 40px);
+    height: 100%;
+    min-height: 360px;
+    width: 100%;
+    padding: 20px;
+    margin-top: 68px;
 }
 
 #main-left {
@@ -171,40 +314,70 @@ main {
     gap: 10px;
     height: 100%;
     width: fit-content;
+    max-width: calc(100% - 10px);
 }
 
 video {
     border-radius: 18px;
-    height: calc(50% - 25px); /* they each take up half the main-left - 1/2 the gap plus 10px space above and below */
-
+    height: calc(50% - 5px); /* for video elements, their flex gap must me subtracted */
 }
 
 #main-right {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
     width: 100%;
     max-width: 640px;
-    height: calc(100% - 40px);
+    min-width: 360px;
+    height: 100%;
 }
 
 #messaging-container {
+    position: relative;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: flex-end;
-    background-color: var(--bg1);
+    background-color: var(--bg1trans);
     width: 100%;
     height: calc(100% - 60px);
     max-width: 640px;
-    border-radius: 22px;
+    border-radius: 20px;
     border: 1px solid var(--bg2);
-    transition: background-color 0.3s, border 0.3s;
+    overflow: hidden;
+}
+
+#status-bar {
+    z-index: 1;
+    position: absolute;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0px 14px;
+    top: 0;
+    width: 100%;
+    height: 24px;
+    border-radius: 19px 19px 0px 0px;
+    background-color: var(--bg2);
+}
+
+#status-bar p {
+    font-size: 12px;
+    color: var(--bg5);
+}
+
+#connection-status-span {
+    text-shadow: 0px 0px 3px var(--bg3);
 }
 
 #message-input-container {
     position: relative; /* Add relative positioning */
     display: flex;
     flex-direction: column; /* Ensure flex items stack vertically */
-    width: calc(100% - 40px);
-    margin-bottom: 20px;
+    width: calc(100% - 20px);
+    margin-bottom: 10px;
 }
 
 #message-input {
@@ -213,14 +386,14 @@ video {
     resize: none;
     width: 100%;
     max-height: 200px;
-    padding: 16px 68px 16px 16px; /* Adjust padding to accommodate send button */
-    margin-top: 20px;
+    padding: 14px 68px 14px 16px; /* Adjust padding to accommodate send button */
+    margin-top: 10px;
     background-color: var(--bg2);
     box-sizing: border-box;
     border: none;
-    border-radius: 10px;
+    border-radius: 12px;
     overflow-x: hidden;
-    transition: height 0.2s, background-color 0.3s, border 0.3s;; /* Add transition for smooth height change */
+    transition: height 0.2s, background-color 0.2s; /* Add transition for smooth height change */
 }
 
 #message-input:focus {
@@ -229,25 +402,23 @@ video {
 
 #send-button {
     position: absolute; /* Position the send button absolutely */
-    bottom: -25px; /* Center vertically */
-    right: 10px; /* Adjust the distance from the right side */
-    transform: translateY(-50%); /* Adjust vertical alignment */
+    right: 2px; /* Adjust the distance from the right side */
+    bottom: -1px;
     height: 52px;
-    padding: 6px;
+    padding: 10px;
+    fill: var(--primary);
     cursor: pointer;
-    transition: right 0.1s;
-}
-
-#send-button:hover {
-    right: 8px;
+    transition: right 0.1s, bottom 0.1s;
 }
 
 #send-button:active {
-    right: 4px;
+    right: -2px;
+    bottom: 3px;
 }
 
 #message-feed-container {
     width: calc(100% + 25px); /* add the scroll bar width to normalize the size */
+    margin-top: 23px;
     overflow-y: scroll;
 }
 
@@ -261,13 +432,36 @@ video {
     overflow-wrap: break-word;
     margin: 12px 20px 12px auto;
     padding: 10px 15px;
-    background-color: var(--primary1A); /* Blue background color */
-    color: white; /* Text color */
+    background-color: var(--outgoingMessage); /* Blue background color */
+    color: #fff; /* Text color */
     border-radius: 20px 20px 0px 20px;
 }
+
+.incoming-message {
+    font-weight: 500;
+    font-size: 1.1rem;
+    position: relative;
+    width: fit-content;
+    max-width: 70%;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+    margin: 12px auto 12px 34px;
+    padding: 10px 15px;
+    background-color: var(--bg3); /* Blue background color */
+    color: var(--ftBase); /* Text color */
+    border-radius: 0px 20px 20px 20px;
+}
+/* Browser Fixes */
 .safari #message-feed-container {
     width: calc(100% - 10px); /* add the scroll bar width to normalize the size */
     overflow-y: scroll;
+}
+.safari .incoming-message {
+    margin-left: 18px;
+}
+.firefox main {
+    padding-left: 0;
+    gap: 0;
 }
 
 #connection-controls {
@@ -275,10 +469,9 @@ video {
     gap: 10px;
     width: 100%;
     height: 50px;
-    margin-top: 10px;
 }
 
-#report {
+#report-button {
     display: flex;
     align-items: center;
     justify-content: center;
@@ -287,14 +480,14 @@ video {
     background-color: var(--bg2);
     border: 1px solid var(--bg3);
     border-radius: 16px;
-    transition: background-color 0.2s, border 0.2s;
     cursor: pointer;
 }
-#report i {
-    font-size: 1.5rem;
-    color: var(--warning1);
+#report-button svg {
+    width: 1.5rem; /* Adjusts the size of the SVG */
+    height: auto; /* Maintains aspect ratio */
+    fill: var(--warningOrange); /* Changes the color of the SVG shapes */
 }
-#connect, #skip {
+#pair-button, #skip-button {
     position: relative;
     display: flex;
     align-items: center;
@@ -304,11 +497,22 @@ video {
     background-color: var(--bg2);
     border: 1px solid var(--bg3);
     border-radius: 16px;
-    transition: background-color 0.2s, border 0.2s;
     cursor: pointer;
 }
-#connect i, #skip i {
+#pair-button svg {
     position: absolute;
     left: 20px;
-    color: var(--logoblue);
+    width: 1rem;
+    height: auto;
+    fill: var(--primary);
+}
+#pair-button svg.hidden {
+    opacity: 0;
+}
+#skip-button svg {
+    position: absolute;
+    left: 20px;
+    width: 1.2rem;
+    height: auto;
+    fill: var(--primary);
 }
