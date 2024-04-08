@@ -32,7 +32,7 @@ const reportButton = document.getElementById('report-button');
 
 // ONLINE : "https://lingomingle.com"
 // OFFLINE : "http://localhost:3000"
-let socket = io("https://lingomingle.com");
+let socket = io("https://lingomingle-service-mrslpylp7a-uw.a.run.app");
 socket.on('yourId', (id) => {
     mySocketId = id;
 });
