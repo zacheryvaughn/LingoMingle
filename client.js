@@ -30,7 +30,7 @@ const skipButton = document.getElementById('skip-button');
 
 const reportButton = document.getElementById('report-button');
 
-let socket = io('http://localhost:3000');
+let socket = io('https://lingominglev1.ey.r.appspot.com');
 socket.on('yourId', (id) => {
     mySocketId = id;
 });
