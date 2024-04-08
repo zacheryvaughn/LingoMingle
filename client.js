@@ -162,16 +162,6 @@ function handleRoomTransition(actionType, roomId) {
     }, 500); // Adjust delay as needed based on server response times.
 }
 
-/////////////////////////////////
-// Server has a map of privateRooms, map keeps track of people in private rooms and the room ID they are in.
-// Server has a createRoom function that creates a room and assigns the roomId to the user's chosen ID.
-// When the server receives 'createPrivateRoom', it creates a room and assigns the 'roomId' (included with the 'createPrivateRoom'.) It adds the user who initiated it's creation to the room.
-// Now there is space for one more user. When server receives 'joinPrivateRoom' it adds the user to the roomId that they input.
-// You see, there is one input field for roomId which is used to both choose the roomId for creation, and join a user to a room that already exists.
-
-// When the server receives 'leavePrivateRoom' it removes both users from the room and deletes the room.
-/////////////////////////////////
-
 createButton.addEventListener('click', () => {
     const roomId = roomIdInput.value.trim();
     if (roomId.length > 6) {
@@ -257,11 +247,20 @@ if (isSafari()) {
 sideSwitch.addEventListener('click', function () {
     const mainLeft = document.getElementById('main-left');
     const mainRight = document.getElementById('main-right');
+    const isNarrowScreen = window.matchMedia('(max-width: 680px)').matches; // Check if screen width is 680px or less
 
     if (!mainLeft.classList.contains('hide') && !mainRight.classList.contains('hide')) {
-        mainRight.classList.add('hide');
-        sideSwitch.classList.add('hide-right');
-        localStorage.setItem('side', 'left'); // Save side setting as 'left'
+        // For narrow screens, always switch to the right side when both sides are visible
+        if (isNarrowScreen) {
+            mainLeft.classList.add('hide');
+            sideSwitch.classList.remove('hide-right');
+            sideSwitch.classList.add('hide-left');
+            localStorage.setItem('side', 'right'); // Save side setting as 'right'
+        } else {
+            mainRight.classList.add('hide');
+            sideSwitch.classList.add('hide-right');
+            localStorage.setItem('side', 'left'); // Save side setting as 'left'
+        }
     } else if (mainRight.classList.contains('hide')) {
         mainLeft.classList.add('hide');
         mainRight.classList.remove('hide');
@@ -269,11 +268,21 @@ sideSwitch.addEventListener('click', function () {
         sideSwitch.classList.add('hide-left');
         localStorage.setItem('side', 'right'); // Save side setting as 'right'
     } else {
-        mainLeft.classList.remove('hide');
-        sideSwitch.classList.remove('hide-left');
-        localStorage.setItem('side', 'both'); // Save side setting as 'both'
+        // For narrow screens, do not allow showing both sides; switch to left side instead
+        if (isNarrowScreen) {
+            mainRight.classList.add('hide');
+            mainLeft.classList.remove('hide');
+            sideSwitch.classList.remove('hide-left');
+            sideSwitch.classList.add('hide-right');
+            localStorage.setItem('side', 'left'); // Save side setting as 'left'
+        } else {
+            mainLeft.classList.remove('hide');
+            sideSwitch.classList.remove('hide-left');
+            localStorage.setItem('side', 'both'); // Save side setting as 'both'
+        }
     }
 });
+
 
 themeSwitch.addEventListener('click', () => {
     const isLightTheme = document.body.classList.toggle('light-theme');
@@ -320,7 +329,7 @@ async function setupCamera() {
         console.error('Error accessing camera:', error);
     }
 }
-window.onload = setupCamera;
+window.onload = setupCamera; // ENABLE LATER
 
 ////////////////////////////////////////////////////////////////////////////////
 // ROOM AND REGION DROPDOWN AND SELECTION //////////////////////////////////////

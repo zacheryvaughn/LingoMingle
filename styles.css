@@ -96,9 +96,7 @@ header {
     align-items: center;
     justify-content: space-between;
     width: 100%;
-    min-width: 680px;
     height: 68px;
-    min-height: 68px;
     padding: 0px 40px 0px 32px;
     background-color: var(--bg0);
     border-bottom: 1px solid var(--bg2);
@@ -290,6 +288,7 @@ header {
     padding: 8px;
     margin: -8px;
     cursor: pointer;
+    flex-shrink: 0;
 }
 
 /* MAIN */
@@ -307,7 +306,7 @@ main {
 }
 
 #main-left {
-    display: flex;
+    display: flex; /* TEMPORARILY DISABLE CAMERA */
     flex-direction: column;
     align-items: center;
     justify-content: center;
@@ -330,7 +329,7 @@ video {
     gap: 10px;
     width: 100%;
     max-width: 640px;
-    min-width: 360px;
+    min-width: 320px;
     height: 100%;
 }
 
@@ -515,4 +514,71 @@ video {
     width: 1.2rem;
     height: auto;
     fill: var(--primary);
+}
+
+@media (max-width: 680px) {
+    header {
+        height: 106px;
+        padding: 0px;
+        flex-direction: column;
+        gap: 12px;
+        justify-content: center;
+    }
+    main {
+        align-items: flex-start;
+        padding: 12px;
+        margin-top: 106px;
+    }
+    #main-left {
+        justify-content: flex-start;
+        max-width: 100%;
+        height: auto;
+        max-height: 100%;
+        overflow: scroll;
+    }
+    video {
+        border-radius: 0;
+        width: 100%;
+    }
+    #main-right {
+        height: calc(100% - 80px);
+    }
+    #logo {
+        height: 32px;
+    }
+    #header-left h1 {
+        font-size: 26px;
+    }
+    #header-right {
+        width: 100%;
+        max-width: 420px;
+        justify-content: space-evenly;
+        gap: 0;
+        padding: 0px 12px;
+    }
+    #room-button, #region-button {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 12px;
+        height: 38px;
+        padding: 0px 14px;
+        background-color: var(--bg2);
+        border: 1px solid var(--bg3);
+        border-radius: 13px;
+        cursor: pointer;
+    }
+    #room-dropdown {
+        top: -20px;
+        right: calc(50% - 113px);
+    }
+    #region-dropdown {
+        top: -280px;
+        right: calc(50% - 120px);
+        width: 240px;
+    }
+    #room-dropdown.active, #region-dropdown.active {
+        z-index: 3;
+        top: 106px;
+    }
 }
