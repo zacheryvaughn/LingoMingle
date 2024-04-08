@@ -30,7 +30,9 @@ const skipButton = document.getElementById('skip-button');
 
 const reportButton = document.getElementById('report-button');
 
-let socket = io('https://lingomingle.com');
+// ONLINE : "https://lingomingle.com"
+// OFFLINE : "http://localhost:3000"
+let socket = io("https://lingomingle.com");
 socket.on('yourId', (id) => {
     mySocketId = id;
 });
