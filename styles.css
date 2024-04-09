@@ -193,6 +193,7 @@ header {
     justify-content: center;
     top: -120px;
     right: 160px;
+    width: 240px;
     background-color: var(--bg0);
     border: 1px solid var(--bg2);
     border-top: none;
@@ -208,8 +209,9 @@ header {
     font-size: 1rem;
     font-weight: 200;
     resize: none;
-    padding: 12px;
-    margin: 12px 12px 6px 12px;
+    width: calc(100% - 24px);
+    padding: 10px;
+    margin: 10px;
     background-color: var(--bg2);
     box-sizing: border-box;
     border: none;
@@ -223,7 +225,7 @@ header {
     display: flex;
     align-items: center;
     justify-content: space-evenly;
-    gap: 6px;
+    gap: 12px;
     width: 100%;
     padding: 0px 12px 12px 12px;
 }
@@ -232,7 +234,7 @@ header {
     align-items: center;
     justify-content: center;
     width: 50%;
-    height: 40px;
+    height: 36px;
     background-color: var(--bg2);
     border-radius: 6px;
     border: 1px solid var(--bg3);
@@ -282,7 +284,7 @@ header {
     height: 38px;
     fill: var(--ftBase);
     padding: 8px;
-    margin: -8px;
+    margin: -10px;
     cursor: pointer;
     flex-shrink: 0;
 }
@@ -496,7 +498,7 @@ video {
 }
 #pair-button svg {
     position: absolute;
-    left: 20px;
+    left: 18px;
     width: 1rem;
     height: auto;
     fill: var(--primary);
@@ -514,19 +516,46 @@ video {
 
 @media (max-width: 680px) {
     header {
-        height: 106px;
         padding: 0px;
         flex-direction: column;
-        gap: 12px;
+        gap: 8px;
         justify-content: center;
+        border: 0;
+    }
+    #header-left {
+        display: none;
+    }
+    #header-right {
+        width: 100%;
+        gap: 10px;
+    }
+    #side-switch {
+        display: none;
+    }
+    #room-button, #region-button {
+        height: 48px;
+        width: calc(40% - 10px);
+    }
+    #room-dropdown, #region-dropdown {
+        right: calc(50% - 120px);
+    }
+    #theme-switch {
+        width: 20%;
+        height: 48px;
+        padding: 10px;
     }
     main {
-        align-items: flex-start;
-        padding: 12px;
-        margin-top: 106px;
+        padding: 0px;
+        margin-top: 68px;
+    }
+    #main-left.hide, #main-right.hide {
+        display: flex;
     }
     #main-left {
+        z-index: -1;
+        position: absolute;
         justify-content: flex-start;
+        gap: 0;
         max-width: 100%;
         height: auto;
         max-height: 100%;
@@ -537,44 +566,48 @@ video {
         width: 100%;
     }
     #main-right {
-        height: calc(100% - 80px);
-    }
-    #logo {
-        height: 32px;
-    }
-    #header-left h1 {
-        font-size: 26px;
-    }
-    #header-right {
-        width: 100%;
-        max-width: 420px;
-        justify-content: space-evenly;
+        max-width: 800px;
+        height: 100%;
         gap: 0;
-        padding: 0px 12px;
     }
-    #room-button, #region-button {
-        display: flex;
+    #messaging-container {
+        background-color: transparent;
+        width: 100%;
+        max-width: 800px;
+        height: calc(100% - 60px);
+        border-radius: 0px;
+        border: 0;
+        overflow: hidden;
+    }
+    #status-bar {
+        border-radius: 0;
+    }
+    #message-input-container {
+        width: 100%;
+        margin: 0;
+    }
+    #message-input {
+        border-radius: 0;
+        margin: 0;
+    }
+    #connection-controls {
         align-items: center;
-        justify-content: center;
-        gap: 12px;
-        height: 38px;
-        padding: 0px 14px;
-        background-color: var(--bg2);
-        border: 1px solid var(--bg3);
+        gap: 10px;
+        height: 68px;
+        padding: 0px 10px;
+        background-color: var(--bg0);
+    }
+    #report-button {
+        height: 48px;
         border-radius: 13px;
-        cursor: pointer;
     }
-    #room-dropdown {
-        top: -20px;
-        right: calc(50% - 113px);
+    #report-button svg {
+        width: 1.5rem; /* Adjusts the size of the SVG */
+        height: auto; /* Maintains aspect ratio */
+        fill: var(--warningOrange); /* Changes the color of the SVG shapes */
     }
-    #region-dropdown {
-        top: -280px;
-        right: calc(50% - 120px);
-        width: 240px;
-    }
-    #room-dropdown.active, #region-dropdown.active {
-        z-index: 3;
-        top: 106px;
+    #pair-button, #skip-button {
+        height: 48px;
+        border-radius: 13px;
     }
 }

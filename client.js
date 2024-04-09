@@ -247,20 +247,11 @@ if (isSafari()) {
 sideSwitch.addEventListener('click', function () {
     const mainLeft = document.getElementById('main-left');
     const mainRight = document.getElementById('main-right');
-    const isNarrowScreen = window.matchMedia('(max-width: 680px)').matches; // Check if screen width is 680px or less
 
     if (!mainLeft.classList.contains('hide') && !mainRight.classList.contains('hide')) {
-        // For narrow screens, always switch to the right side when both sides are visible
-        if (isNarrowScreen) {
-            mainLeft.classList.add('hide');
-            sideSwitch.classList.remove('hide-right');
-            sideSwitch.classList.add('hide-left');
-            localStorage.setItem('side', 'right'); // Save side setting as 'right'
-        } else {
-            mainRight.classList.add('hide');
-            sideSwitch.classList.add('hide-right');
-            localStorage.setItem('side', 'left'); // Save side setting as 'left'
-        }
+        mainRight.classList.add('hide');
+        sideSwitch.classList.add('hide-right');
+        localStorage.setItem('side', 'left'); // Save side setting as 'left'
     } else if (mainRight.classList.contains('hide')) {
         mainLeft.classList.add('hide');
         mainRight.classList.remove('hide');
@@ -268,18 +259,9 @@ sideSwitch.addEventListener('click', function () {
         sideSwitch.classList.add('hide-left');
         localStorage.setItem('side', 'right'); // Save side setting as 'right'
     } else {
-        // For narrow screens, do not allow showing both sides; switch to left side instead
-        if (isNarrowScreen) {
-            mainRight.classList.add('hide');
-            mainLeft.classList.remove('hide');
-            sideSwitch.classList.remove('hide-left');
-            sideSwitch.classList.add('hide-right');
-            localStorage.setItem('side', 'left'); // Save side setting as 'left'
-        } else {
-            mainLeft.classList.remove('hide');
-            sideSwitch.classList.remove('hide-left');
-            localStorage.setItem('side', 'both'); // Save side setting as 'both'
-        }
+        mainLeft.classList.remove('hide');
+        sideSwitch.classList.remove('hide-left');
+        localStorage.setItem('side', 'both'); // Save side setting as 'both'
     }
 });
 
