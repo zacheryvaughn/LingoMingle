@@ -314,13 +314,26 @@ main {
 }
 
 .video-cropper {
+    z-index: -1;
+    position: relative;
     height: calc(50% - 5px);
-    width: fit-content;
+    background-color: var(--bg1);
+    border-radius: 16px;
+}
+.video-cropper p {
+    z-index: -1;
+    position: absolute;
+    width: 110px;
+    height: 20px;
+    top: calc(50% - 10px);
+    left: calc(50% - 55px);
 }
 
 video {
     border-radius: 16px;
-    max-height: 100%;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
 }
 
 #main-right {
@@ -574,16 +587,16 @@ video {
         display: flex;
         align-items: center;
         justify-content: center;
-        height: 50%;
-        width: 100%;
-    }
-    video.horizontal {
-        height: 100%; /* If horizontal, height = 100%. If vertical, width = 100%. */
+        height: 50%; /* Adjust based on your design */
+        width: 100vw;
         border-radius: 0;
+        overflow: hidden; /* Ensures video is clipped if it overflows */
     }
-    video.vertical {
-        width: 100%; /* If horizontal, height = 100%. If vertical, width = 100%. */
+    video {
+        width: 100%;  /* Stretch to cover the width of the container */
+        height: 100%; /* Stretch to cover the height of the container */
         border-radius: 0;
+        object-fit: cover; /* This will ignore the aspect ratio and fill the container */
     }
     #main-right {
         max-width: 800px;

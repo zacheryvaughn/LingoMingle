@@ -299,39 +299,28 @@ document.addEventListener('DOMContentLoaded', () => {
 ////////////////////////////////////////////////////////////////////////////////
 // CAMERA FEED /////////////////////////////////////////////////////////////////
 
+// Setup Camera (Demo for now, not really streaming)
 async function setupCamera() {
     try {
         const stream = await navigator.mediaDevices.getUserMedia({ video: true, audio: false });
-        
         const incomingFeed = document.getElementById('incoming-feed');
         incomingFeed.srcObject = stream;
-        applyVideoClassBasedOnAspectRatio(incomingFeed);
-
         const outgoingFeed = document.getElementById('outgoing-feed');
         outgoingFeed.srcObject = stream.clone();
-        applyVideoClassBasedOnAspectRatio(outgoingFeed);
-
     } catch (error) {
         console.error('Error accessing camera:', error);
     }
 }
-
-function applyVideoClassBasedOnAspectRatio(videoElement) {
-    videoElement.onloadedmetadata = () => {
-        const aspectRatio = videoElement.videoWidth / videoElement.videoHeight;
-
-        videoElement.classList.remove('horizontal', 'vertical');
-
-        if (aspectRatio > 1) {
-            videoElement.classList.add('horizontal');
-        } else {
-            videoElement.classList.add('vertical');
-        }
-    };
-}
-
-window.onload = setupCamera;
-
+// Click -> Class to <body>
+pairButton.addEventListener('click', () => {
+    setupCamera();
+});
+joinButton.addEventListener('click', () => {
+    setupCamera();
+});
+createButton.addEventListener('click', () => {
+    setupCamera();
+});
 
 ////////////////////////////////////////////////////////////////////////////////
 // ROOM AND REGION DROPDOWN AND SELECTION //////////////////////////////////////
