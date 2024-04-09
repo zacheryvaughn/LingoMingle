@@ -6,17 +6,15 @@
 /* COLORS */
 :root {
     --primary: rgb(58, 206, 255);
-    --blobBlue: rgb(25, 146, 186);
     --warningOrange: #ff5b3e;
     --outgoingMessage: rgb(0, 165, 220);
 
-    --bg0: #0a0a0a;
-    --bg1: #1a1a1a;
-    --bg1trans: #1a1a1a99;
-    --bg2: #2a2a2a;
-    --bg3: #3a3a3a;
-    --bg4: #4a4a4a;
-    --bg5: #5a5a5a;
+    --bg0: #0a0d10;
+    --bg1: #1a1d20;
+    --bg2: #2a2d30;
+    --bg3: #3a3d40;
+    --bg4: #4a4d50;
+    --bg5: #5a5d60;
 
     --ftBase: #eee;
     --ftBlue: #DFF7FF;
@@ -26,15 +24,13 @@
 
 .light-theme {
     --primary: rgb(0, 159, 216);
-    --blobBlue: rgb(0, 149, 198);
 
-    --bg0: #fafafa;
-    --bg1: #eaeaea;
-    --bg1trans: #eaeaea99;
-    --bg2: #dadada;
-    --bg3: #cacaca;
-    --bg4: #bababa;
-    --bg5: #aaaaaa;
+    --bg0: #f9fcff;
+    --bg1: #e9ecef;
+    --bg2: #d9dcdf;
+    --bg3: #c9cccf;
+    --bg4: #b9bcbf;
+    --bg5: #a9acaf;
 
     --ftBase: #222;
     --ftBlue: #3bb3e3;
@@ -339,7 +335,7 @@ video {
     flex-direction: column;
     align-items: center;
     justify-content: flex-end;
-    background-color: var(--bg1trans);
+    background-color: var(--bg1);
     width: 100%;
     height: calc(100% - 60px);
     max-width: 640px;
