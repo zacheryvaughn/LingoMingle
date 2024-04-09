@@ -299,19 +299,39 @@ document.addEventListener('DOMContentLoaded', () => {
 ////////////////////////////////////////////////////////////////////////////////
 // CAMERA FEED /////////////////////////////////////////////////////////////////
 
-// Setup Camera (Demo for now, not really streaming)
 async function setupCamera() {
     try {
         const stream = await navigator.mediaDevices.getUserMedia({ video: true, audio: false });
+        
         const incomingFeed = document.getElementById('incoming-feed');
         incomingFeed.srcObject = stream;
+        applyVideoClassBasedOnAspectRatio(incomingFeed);
+
         const outgoingFeed = document.getElementById('outgoing-feed');
         outgoingFeed.srcObject = stream.clone();
+        applyVideoClassBasedOnAspectRatio(outgoingFeed);
+
     } catch (error) {
         console.error('Error accessing camera:', error);
     }
 }
-window.onload = setupCamera; // ENABLE LATER
+
+function applyVideoClassBasedOnAspectRatio(videoElement) {
+    videoElement.onloadedmetadata = () => {
+        const aspectRatio = videoElement.videoWidth / videoElement.videoHeight;
+
+        videoElement.classList.remove('horizontal', 'vertical');
+
+        if (aspectRatio > 1) {
+            videoElement.classList.add('horizontal');
+        } else {
+            videoElement.classList.add('vertical');
+        }
+    };
+}
+
+window.onload = setupCamera;
+
 
 ////////////////////////////////////////////////////////////////////////////////
 // ROOM AND REGION DROPDOWN AND SELECTION //////////////////////////////////////

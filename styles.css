@@ -310,13 +310,17 @@ main {
     justify-content: center;
     gap: 10px;
     height: 100%;
-    width: fit-content;
     max-width: calc(100% - 10px);
 }
 
+.video-cropper {
+    height: calc(50% - 5px);
+    width: fit-content;
+}
+
 video {
-    border-radius: 18px;
-    height: calc(50% - 5px); /* for video elements, their flex gap must me subtracted */
+    border-radius: 16px;
+    max-height: 100%;
 }
 
 #main-right {
@@ -533,8 +537,13 @@ video {
         display: none;
     }
     #room-button, #region-button {
+        position: relative;
         height: 48px;
         width: calc(40% - 10px);
+    }
+    #room-icon, #region-button svg, #pair-button svg, #skip-button svg {
+        position: absolute;
+        left: 12px;
     }
     #room-dropdown, #region-dropdown {
         right: calc(50% - 120px);
@@ -554,16 +563,27 @@ video {
     #main-left {
         z-index: -1;
         position: absolute;
+        top: 92px;
         justify-content: flex-start;
         gap: 0;
         max-width: 100%;
-        height: auto;
+        height: calc(100% - 210px);
         max-height: 100%;
-        overflow: scroll;
     }
-    video {
-        border-radius: 0;
+    .video-cropper {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        height: 50%;
         width: 100%;
+    }
+    video.horizontal {
+        height: 100%; /* If horizontal, height = 100%. If vertical, width = 100%. */
+        border-radius: 0;
+    }
+    video.vertical {
+        width: 100%; /* If horizontal, height = 100%. If vertical, width = 100%. */
+        border-radius: 0;
     }
     #main-right {
         max-width: 800px;
@@ -571,7 +591,7 @@ video {
         gap: 0;
     }
     #messaging-container {
-        background-color: transparent;
+        background-color: #00000033;
         width: 100%;
         max-width: 800px;
         height: calc(100% - 60px);
@@ -581,30 +601,48 @@ video {
     }
     #status-bar {
         border-radius: 0;
+        box-shadow: 0px 3px 10px 0px #00000033;
+    }
+    #message-feed-container {
+        max-height: 60%;
+        width: calc(100% - 24px);
+        padding-top: 120px;
+        mask: linear-gradient(to top, rgba(255,255,255,1), rgba(255,255,255,1), rgba(255,255,255,0)); /* Semi-transparent gradient */
+    }
+    .outgoing-message {
+        box-shadow: 0px 3px 10px 0px #00000033;
+        font-size: 1rem;
+        padding: 6px 12px;
+        border-radius: 14px 14px 0px 14px;
+        margin: 12px 0px 12px auto;
+    }
+    .incoming-message {
+        box-shadow: 0px 3px 10px 0px #00000033;
+        font-size: 1rem;
+        padding: 6px 12px;
+        border-radius: 14px 14px 14px 0px;
+        margin: 12px auto 12px 0px;
     }
     #message-input-container {
+        box-shadow: 0px 0px 20px 0px #00000066;
         width: 100%;
         margin: 0;
     }
     #message-input {
         border-radius: 0;
         margin: 0;
+        height: 50px;
     }
     #connection-controls {
         align-items: center;
         gap: 10px;
-        height: 68px;
+        min-height: 68px;
         padding: 0px 10px;
         background-color: var(--bg0);
     }
     #report-button {
         height: 48px;
         border-radius: 13px;
-    }
-    #report-button svg {
-        width: 1.5rem; /* Adjusts the size of the SVG */
-        height: auto; /* Maintains aspect ratio */
-        fill: var(--warningOrange); /* Changes the color of the SVG shapes */
     }
     #pair-button, #skip-button {
         height: 48px;
