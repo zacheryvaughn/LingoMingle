@@ -30,17 +30,21 @@ const skipButton = document.getElementById('skip-button');
 
 const reportButton = document.getElementById('report-button');
 
-// ONLINE : "https://lingomingle.com"
-// OFFLINE : "http://localhost:3000"
-let socket = io("https://lingomingle-service-mrslpylp7a-uw.a.run.app");
-socket.on('yourId', (id) => {
-    mySocketId = id;
-});
 
 // Assign State Variables
 let isWaiting = false;
 let isPaired = false;
 let inPrivateRoom = false;
+// Me and you
+let myId = null;
+let partnerId = null;
+
+// ONLINE : "https://lingomingle-service-mrslpylp7a-uw.a.run.app"
+// OFFLINE : "http://localhost:3000"
+let socket = io("http://localhost:3000");
+socket.on('yourId', (id) => {
+    myId = id;
+});
 
 // Useful Responses from Server
 socket.on('unpaired', () => {
@@ -80,7 +84,8 @@ socket.on('waiting', () => {
     console.log('Waiting...');
 });
 
-socket.on('paired', () => {
+socket.on('paired', (data) => {
+    partnerId = (myId === data.user1Id) ? data.user2Id : data.user1Id;
     // Reassign Variables
     isPaired = true;
     isWaiting = false;
@@ -93,9 +98,12 @@ socket.on('paired', () => {
     pauseIcon.classList.remove('hidden');
     // Log to Console
     console.log('Paired.');
+    console.log('Your ID:', myId);
+    console.log('Partner ID:', partnerId);
 });
 
-socket.on('enteredPrivateRoom', () => {
+socket.on('pairedInPrivateRoom', (data) => {
+    partnerId = (myId === data.user1Id) ? data.user2Id : data.user1Id;
     // Reassign Variables
     inPrivateRoom = true;
     isWaiting = false;
@@ -112,12 +120,29 @@ socket.on('enteredPrivateRoom', () => {
     // Clear messageFeed
     messageFeed.innerHTML = '';
     // Log to Console
-    console.log('Entered private room.');
+    console.log('Paired in private room.');
+    console.log('Your ID:', myId);
+    console.log('Partner ID:', partnerId);
 });
 
-// socket.on('leftPrivateRoom', () => {
-// server should emit unpaired, not leftPrivateRoom, because to the client, these things are the same
-// });
+socket.on('privateRoomCreated', () => {
+    inPrivateRoom = true;
+    isWaiting = false;
+    isPaired = false;
+    connectionStatus.textContent = `Private`;
+    connectionStatus.style.color = `#30c4ff`;
+    // Style pairButton
+    pairButtonText.textContent = 'Leave';
+    playIcon.classList.add('hidden');
+    pauseIcon.classList.remove('hidden');
+    pairButton.style.width = 'calc(80% + 14px)';
+    // Hide the skipButton
+    skipButton.style.display = 'none';
+    // Clear messageFeed
+    messageFeed.innerHTML = '';
+    // Log to Console
+    console.log('Created private room.');
+});
 
 // Handling Client Click Emit Events
 pairButton.addEventListener('click', () => {
@@ -125,8 +150,10 @@ pairButton.addEventListener('click', () => {
         socket.emit('unwaitRequest');
     } else if (isPaired) {
         socket.emit('unpairRequest');
+        endCall();
     } else if (inPrivateRoom) {
         socket.emit('leavePrivateRoom');
+        endCall();
     } else {
         socket.emit('pairRequest');
     };
@@ -135,6 +162,7 @@ pairButton.addEventListener('click', () => {
 skipButton.addEventListener('click', () => {
     if (isPaired) {
         socket.emit('skipRequest');
+        endCall();
     } else {
         console.log('Pair before skipping.');
     };
@@ -148,8 +176,10 @@ function handleRoomTransition(actionType, roomId) {
         socket.emit('unwaitRequest');
     } else if (isPaired) {
         socket.emit('unpairRequest');
+        endCall();
     } else if (inPrivateRoom) {
         socket.emit('leavePrivateRoom');
+        endCall();
     }
 
     // Then, after a short delay to allow the server to process the state clearing, perform the requested action.
@@ -206,7 +236,7 @@ function sendMessage() {
 };
 
 socket.on('messageFromServer', (data) => {
-    if ((data.sender !== mySocketId) && (isPaired || inPrivateRoom)) {
+    if ((data.sender !== myId) && (isPaired || inPrivateRoom)) {
         const messageElement = document.createElement("div");
         messageElement.classList.add("incoming-message");
         messageElement.innerHTML = data.text.replace(/\n/g, '<br>');
@@ -299,33 +329,100 @@ document.addEventListener('DOMContentLoaded', () => {
 ////////////////////////////////////////////////////////////////////////////////
 // CAMERA FEED /////////////////////////////////////////////////////////////////
 
-// Setup Camera (Demo for now, not really streaming)
-async function setupCamera() {
-    try {
-        const stream = await navigator.mediaDevices.getUserMedia({ video: true, audio: false });
-        const incomingFeed = document.getElementById('incoming-feed');
-        incomingFeed.srcObject = stream;
-        const outgoingFeed = document.getElementById('outgoing-feed');
-        outgoingFeed.srcObject = stream.clone();
-    } catch (error) {
-        console.error('Error accessing camera:', error);
+navigator.mediaDevices.getUserMedia({ video: true })
+    .then(stream => {
+        outgoingCamFeed.srcObject = stream;
+        outgoingCamFeed.play().catch(e => console.error('Playback failed.', e));
+        localStream = stream; // Assign the stream to localStream for further use
+    })
+    .catch(error => {
+        console.error('Error accessing the camera.', error);
+    });
+
+let peerConnection = null;
+const configuration = { 'iceServers': [{ 'urls': 'stun:stun.l.google.com:19302' }] };
+
+socket.on('initiateCall', () => {
+    peerConnection = new RTCPeerConnection(configuration);
+
+    // Check if localStream is available to add tracks
+    if (localStream) {
+        localStream.getTracks().forEach(track => {
+            peerConnection.addTrack(track, localStream);
+        });
+    } else {
+        console.error("Local stream not available.");
+    }
+
+    peerConnection.onicecandidate = ({ candidate }) => {
+        if (candidate) {
+            socket.emit('sendCandidate', { candidate, to: partnerId });
+        }
+    };
+
+    peerConnection.ontrack = event => {
+        incomingCamFeed.srcObject = event.streams[0];
+        incomingCamFeed.play().catch(e => console.error('Error playing incoming stream.', e));
+    };
+
+    peerConnection.createOffer()
+        .then(offer => peerConnection.setLocalDescription(offer))
+        .then(() => {
+            socket.emit('sendOffer', { offer: peerConnection.localDescription, to: partnerId });
+        });
+});
+
+socket.on('receiveOffer', (data) => {
+    peerConnection = new RTCPeerConnection(configuration);
+    peerConnection.setRemoteDescription(new RTCSessionDescription(data.offer));
+
+    if (localStream) {
+        localStream.getTracks().forEach(track => {
+            peerConnection.addTrack(track, localStream);
+        });
+    }
+
+    peerConnection.onicecandidate = ({ candidate }) => {
+        if (candidate) {
+            socket.emit('sendCandidate', { candidate, to: data.from });
+        }
+    };
+
+    peerConnection.ontrack = event => {
+        incomingCamFeed.srcObject = event.streams[0];
+        incomingCamFeed.play().catch(e => console.error('Error playing incoming stream.', e));
+    };
+
+    peerConnection.createAnswer()
+        .then(answer => peerConnection.setLocalDescription(answer))
+        .then(() => {
+            socket.emit('sendAnswer', { answer: peerConnection.localDescription, to: data.from });
+        });
+});
+
+socket.on('receiveAnswer', data => {
+    peerConnection.setRemoteDescription(new RTCSessionDescription(data.answer));
+});
+
+socket.on('receiveCandidate', data => {
+    const candidate = new RTCIceCandidate(data.candidate);
+    peerConnection.addIceCandidate(candidate);
+});
+
+function endCall() {
+    if (peerConnection) {
+        peerConnection.close();
+        peerConnection = null;
+    }
+    if (incomingCamFeed.srcObject) {
+        incomingCamFeed.srcObject.getTracks().forEach(track => track.stop());
+        incomingCamFeed.srcObject = null;
     }
 }
-// Click -> Class to <body>
-pairButton.addEventListener('click', () => {
-    setupCamera();
-});
-joinButton.addEventListener('click', () => {
-    setupCamera();
-});
-createButton.addEventListener('click', () => {
-    setupCamera();
-});
 
 ////////////////////////////////////////////////////////////////////////////////
 // ROOM AND REGION DROPDOWN AND SELECTION //////////////////////////////////////
 
-// ROOM AND REGION SELECTION
 let hoverTimer;
 
 // Function to toggle active class and close others
@@ -389,7 +486,7 @@ function closeDropdown(dropdownId) {
     document.getElementById(dropdownId.split('-')[0] + '-button').addEventListener('click', () => {
         clearTimeout(hoverTimer);
         hasEntered[dropdownId] = false; // Reset the flag
-        hoverTimer = setTimeout(() => closeDropdown(dropdownId), 2000); // Auto-close after 2 seconds if not entered
+        hoverTimer = setTimeout(() => closeDropdown(dropdownId), 3000); // Auto-close after 2 seconds if not entered
     });
     dropdown.addEventListener('mouseenter', () => {
         clearTimeout(hoverTimer); // Clear auto-close timer if mouse enters
@@ -397,7 +494,7 @@ function closeDropdown(dropdownId) {
     });
     dropdown.addEventListener('mouseleave', () => {
         if (hasEntered[dropdownId]) { // Only start the close timer if the mouse had entered the dropdown
-            hoverTimer = setTimeout(() => closeDropdown(dropdownId), 1000); // Timeout after 1 second
+            hoverTimer = setTimeout(() => closeDropdown(dropdownId), 2000); // Timeout after 1 second
         }
     });
 });
@@ -429,5 +526,3 @@ regionCheckboxes.forEach(checkbox => {
 
 // Initial update in case there's a need to adjust the Global checkbox based on others
 updateGlobalCheckbox();
-
-// SQUISHY BLOB

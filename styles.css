@@ -310,23 +310,17 @@ main {
     justify-content: center;
     gap: 10px;
     height: 100%;
-    max-width: calc(100% - 10px);
+    width: 100%;
+    min-width: 320px;
+    max-width: 480px;
 }
 
 .video-cropper {
     z-index: -1;
     position: relative;
+    width: 100%;
     height: calc(50% - 5px);
-    background-color: var(--bg1);
     border-radius: 16px;
-}
-.video-cropper p {
-    z-index: -1;
-    position: absolute;
-    width: 110px;
-    height: 20px;
-    top: calc(50% - 10px);
-    left: calc(50% - 55px);
 }
 
 video {
@@ -342,10 +336,10 @@ video {
     align-items: center;
     justify-content: center;
     gap: 10px;
-    width: 100%;
-    max-width: 640px;
-    min-width: 320px;
     height: 100%;
+    width: 100%;
+    max-width: 540px;
+    min-width: 320px;
 }
 
 #messaging-container {
@@ -357,7 +351,6 @@ video {
     background-color: var(--bg1);
     width: 100%;
     height: calc(100% - 60px);
-    max-width: 640px;
     border-radius: 20px;
     border: 1px solid var(--bg2);
     overflow: hidden;
