@@ -41,7 +41,7 @@ let partnerId = null;
 
 // ONLINE : "https://lingomingle-service-mrslpylp7a-uw.a.run.app"
 // OFFLINE : "http://localhost:3000"
-let socket = io("http://localhost:3000");
+let socket = io("https://lingomingle-service-mrslpylp7a-uw.a.run.app");
 socket.on('yourId', (id) => {
     myId = id;
 });
