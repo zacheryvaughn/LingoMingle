@@ -65,6 +65,7 @@ socket.on('unpaired', () => {
     messageFeed.innerHTML = '';
     // Log to Console
     console.log('Unpaired.');
+    endCall();
 });
 
 socket.on('waiting', () => {
@@ -82,6 +83,7 @@ socket.on('waiting', () => {
     messageFeed.innerHTML = '';
     // Log to Console
     console.log('Waiting...');
+    endCall(); // Ensured that after a user has been skipped, the call ends on their side.
 });
 
 socket.on('paired', (data) => {
