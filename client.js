@@ -329,14 +329,15 @@ document.addEventListener('DOMContentLoaded', () => {
 ////////////////////////////////////////////////////////////////////////////////
 // CAMERA FEED /////////////////////////////////////////////////////////////////
 
-navigator.mediaDevices.getUserMedia({ video: true })
+// Request both video and audio
+navigator.mediaDevices.getUserMedia({ video: true, audio: true })
     .then(stream => {
-        outgoingCamFeed.srcObject = stream;
+        outgoingCamFeed.srcObject = stream;  // This feeds the local video element
         outgoingCamFeed.play().catch(e => console.error('Playback failed.', e));
-        localStream = stream; // Assign the stream to localStream for further use
+        localStream = stream; // Store the stream globally to be used later
     })
     .catch(error => {
-        console.error('Error accessing the camera.', error);
+        console.error('Error accessing media devices.', error);  // Catch and log any errors with media access
     });
 
 let peerConnection = null;
@@ -345,7 +346,7 @@ const configuration = { 'iceServers': [{ 'urls': 'stun:stun.l.google.com:19302' 
 socket.on('initiateCall', () => {
     peerConnection = new RTCPeerConnection(configuration);
 
-    // Check if localStream is available to add tracks
+    // Check if the local stream is available and add each track to the peer connection
     if (localStream) {
         localStream.getTracks().forEach(track => {
             peerConnection.addTrack(track, localStream);
@@ -354,17 +355,22 @@ socket.on('initiateCall', () => {
         console.error("Local stream not available.");
     }
 
+    // Handle ICE candidates
     peerConnection.onicecandidate = ({ candidate }) => {
         if (candidate) {
             socket.emit('sendCandidate', { candidate, to: partnerId });
         }
     };
 
+    // Set remote stream as the source for the incoming video element
     peerConnection.ontrack = event => {
-        incomingCamFeed.srcObject = event.streams[0];
+        if (!incomingCamFeed.srcObject) {
+            incomingCamFeed.srcObject = event.streams[0];
+        }
         incomingCamFeed.play().catch(e => console.error('Error playing incoming stream.', e));
     };
 
+    // Create and send an offer to the other peer
     peerConnection.createOffer()
         .then(offer => peerConnection.setLocalDescription(offer))
         .then(() => {
@@ -376,23 +382,29 @@ socket.on('receiveOffer', (data) => {
     peerConnection = new RTCPeerConnection(configuration);
     peerConnection.setRemoteDescription(new RTCSessionDescription(data.offer));
 
+    // Add local stream tracks to the peer connection
     if (localStream) {
         localStream.getTracks().forEach(track => {
             peerConnection.addTrack(track, localStream);
         });
     }
 
+    // Handle ICE candidates
     peerConnection.onicecandidate = ({ candidate }) => {
         if (candidate) {
             socket.emit('sendCandidate', { candidate, to: data.from });
         }
     };
 
+    // Set remote stream as the source for the incoming video element
     peerConnection.ontrack = event => {
-        incomingCamFeed.srcObject = event.streams[0];
+        if (!incomingCamFeed.srcObject) {
+            incomingCamFeed.srcObject = event.streams[0];
+        }
         incomingCamFeed.play().catch(e => console.error('Error playing incoming stream.', e));
     };
 
+    // Create and send an answer back to the initiator
     peerConnection.createAnswer()
         .then(answer => peerConnection.setLocalDescription(answer))
         .then(() => {
@@ -419,6 +431,7 @@ function endCall() {
         incomingCamFeed.srcObject = null;
     }
 }
+
 
 ////////////////////////////////////////////////////////////////////////////////
 // ROOM AND REGION DROPDOWN AND SELECTION //////////////////////////////////////
