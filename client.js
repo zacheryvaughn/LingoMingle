@@ -244,13 +244,14 @@ function sendMessage() {
         messageFeed.appendChild(messageElement);
         messageFeed.scrollTop = messageFeed.scrollHeight;
         messageInput.value = '';
-        messageInput.style.height = '';
+        messageInput.style.height = 'auto';  // Reset to default height
+        resizeTextarea();  // Resize based on new content (which should be empty now)
     } else if (!isPaired) {
         console.log("You must pair before sending a message.");
     } else {
         console.log("You cannot send an empty message.");
     }
-};
+}
 
 socket.on('messageFromServer', (data) => {
     if ((data.sender !== myId) && (isPaired || inPrivateRoom)) {
@@ -263,7 +264,7 @@ socket.on('messageFromServer', (data) => {
 });
 
 function resizeTextarea() {
-    messageInput.style.height = '';
+    messageInput.style.height = 'auto';  // Ensure it starts from the default height
     messageInput.style.height = messageInput.scrollHeight + 'px';
 }
 
@@ -291,57 +292,23 @@ if (isSafari()) {
     document.body.classList.add('firefox');
 }
 
-sideSwitch.addEventListener('click', function () {
-    const mainLeft = document.getElementById('main-left');
-    const mainRight = document.getElementById('main-right');
-
-    if (!mainLeft.classList.contains('hide') && !mainRight.classList.contains('hide')) {
-        mainRight.classList.add('hide');
-        sideSwitch.classList.add('hide-right');
-        localStorage.setItem('side', 'left'); // Save side setting as 'left'
-    } else if (mainRight.classList.contains('hide')) {
-        mainLeft.classList.add('hide');
-        mainRight.classList.remove('hide');
-        sideSwitch.classList.remove('hide-right');
-        sideSwitch.classList.add('hide-left');
-        localStorage.setItem('side', 'right'); // Save side setting as 'right'
-    } else {
-        mainLeft.classList.remove('hide');
-        sideSwitch.classList.remove('hide-left');
-        localStorage.setItem('side', 'both'); // Save side setting as 'both'
-    }
-});
-
+// Theme Setting
+function setTheme() {
+    const shouldUseLightTheme = localStorage.getItem('theme') === 'light' && window.innerWidth >= 680;
+    document.body.classList.toggle('light-theme', shouldUseLightTheme);
+}
 
 themeSwitch.addEventListener('click', () => {
-    const isLightTheme = document.body.classList.toggle('light-theme');
-    if (isLightTheme) {
-        localStorage.setItem('theme', 'light');
-    } else {
-        localStorage.setItem('theme', 'dark');
-    }
+    const currentThemeIsLight = document.body.classList.contains('light-theme');
+    const newTheme = currentThemeIsLight ? 'dark' : 'light';
+    localStorage.setItem('theme', newTheme);
+
+    setTheme();
 });
 
-document.addEventListener('DOMContentLoaded', () => {
-    const savedTheme = localStorage.getItem('theme');
-    if (savedTheme === 'light') {
-        document.body.classList.add('light-theme');
-    } else {
-        document.body.classList.remove('light-theme');
-    }
+window.addEventListener('DOMContentLoaded', setTheme);
+window.addEventListener('resize', setTheme);
 
-    // Apply the saved side setting
-    const savedSide = localStorage.getItem('side');
-    const mainLeft = document.getElementById('main-left');
-    const mainRight = document.getElementById('main-right');
-    if (savedSide === 'left') {
-        mainRight.classList.add('hide');
-        sideSwitch.classList.add('hide-right');
-    } else if (savedSide === 'right') {
-        mainLeft.classList.add('hide');
-        sideSwitch.classList.add('hide-left');
-    } // No need to handle 'both' as it's the default state
-});
 
 ////////////////////////////////////////////////////////////////////////////////
 // CAMERA FEED /////////////////////////////////////////////////////////////////

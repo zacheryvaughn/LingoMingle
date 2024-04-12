@@ -121,33 +121,6 @@ header {
     gap: 19px;
 }
 
-#side-switch {
-    display: flex;
-    font-size: 1.5rem;
-    padding: 12px;
-    margin: -12px;
-    cursor: pointer;
-}
-
-#side-switch p {
-    transition: opacity 0.2s;
-}
-#side-switch p:first-of-type {
-    margin-right: 1px;
-}
-#side-switch.hide-right p:last-of-type {
-    opacity: 0;
-}
-#side-switch.hide-left p:first-of-type {
-    opacity: 0;
-}
-#main-left.hide {
-    display: none;
-}
-#main-right.hide {
-    display: none;
-}
-
 #room-button, #region-button {
     display: flex;
     align-items: center;
@@ -328,6 +301,26 @@ video {
     width: 100%;
     height: 100%;
     object-fit: cover;
+}
+
+.video-cropper p {
+    z-index: -1;
+    position: absolute;
+    top: calc(50%);
+    left: calc(50% - 80px);
+    font-family: Cakecafe, sans-serif;
+    color: var(--ftBlue);
+    font-size: 32px;
+    opacity: 0.5;
+}
+
+.video-cropper img {
+    z-index: -1;
+    position: absolute;
+    width: 60px;
+    top: calc(50% - 60px);
+    left: calc(50% - 30px);
+    opacity: 0.5;
 }
 
 #main-right {
@@ -535,6 +528,7 @@ video {
         justify-content: center;
         border: 0;
         overflow: hidden;
+        background-color: #00000033;
     }
     #header-left {
         display: none;
@@ -543,13 +537,16 @@ video {
         width: 100%;
         gap: 10px;
     }
-    #side-switch {
+    #theme-switch {
         display: none;
     }
-    #room-button, #region-button {
+    #room-button, #region-button, #room-button:hover, #region-button:hover, #room-button:active, #region-button:active, #room-button.active, #region-button.active {
         position: relative;
         height: 48px;
-        width: calc(40% - 10px);
+        width: calc(50% - 15px);
+        background-color: #00000033;
+        backdrop-filter: blur(10px);
+        border: 0;
     }
     #room-icon, #region-button svg, #pair-button svg, #skip-button svg {
         position: absolute;
@@ -558,27 +555,19 @@ video {
     #room-dropdown, #region-dropdown {
         right: calc(50% - 120px);
     }
-    #theme-switch {
-        width: 20%;
-        height: 48px;
-        padding: 10px;
-    }
     main {
         padding: 0px;
         margin-top: 68px;
         overflow: hidden;
     }
-    #main-left.hide, #main-right.hide {
-        display: flex;
-    }
     #main-left {
         z-index: -1;
         position: absolute;
-        bottom: 118px;
+        bottom: 0px;
         justify-content: flex-start;
         gap: 0;
         max-width: 100%;
-        height: calc(100% - 210px);
+        height: 100%;
         max-height: 100%;
         overflow: hidden;
     }
@@ -617,7 +606,10 @@ video {
     }
     #status-bar {
         border-radius: 0;
-        box-shadow: 0px 3px 10px 0px #00000033;
+        background-color: transparent;
+    }
+    #status-bar p {
+        color: #fff;
     }
     #message-feed-container {
         max-height: 50%;
@@ -647,7 +639,6 @@ video {
         margin-left: 12px;
     }
     #message-input-container {
-        box-shadow: 0px 0px 20px 0px #00000066;
         width: 100%;
         margin: 0;
     }
@@ -655,20 +646,28 @@ video {
         border-radius: 0;
         margin: 0;
         height: 50px;
+        background-color: transparent;
+    }
+    #message-input:focus {
+        outline: none;
+        background-color: #00000033;
+        backdrop-filter: blur(10px);
+    }
+    #message-input::placeholder {
+        color: #ddd;
     }
     #connection-controls {
         align-items: center;
         gap: 10px;
         min-height: 68px;
         padding: 0px 10px;
-        background-color: var(--bg0);
+        background-color: #00000033;
     }
-    #report-button {
+    #report-button, #pair-button, #skip-button, #report-button:hover, #pair-button:hover, #skip-button:hover, #report-button:active, #pair-button:active, #skip-button:active {
         height: 48px;
         border-radius: 13px;
-    }
-    #pair-button, #skip-button {
-        height: 48px;
-        border-radius: 13px;
+        background-color: #00000033;
+        backdrop-filter: blur(10px);
+        border: 0;
     }
 }
