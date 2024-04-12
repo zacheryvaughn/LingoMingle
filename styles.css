@@ -7,6 +7,7 @@
 :root {
     --primary: #44ccff;
     --warningOrange: #ff553e;
+    --green: #44f35f;
     --outgoingMessage: rgb(0, 165, 220);
 
     --bg0: #0a0d10;
@@ -136,12 +137,12 @@ header {
     cursor: pointer;
 }
 
-#room-button:hover, #region-button:hover, #create-room:hover, #join-room:hover, #report-button:hover, #pair-button:hover, #skip-button:hover {
+#room-button:hover, #region-button:hover, #create-room:hover, #join-room:hover, #messaging-button:hover, #pair-button:hover, #skip-button:hover {
     background-color: var(--bg1);
     transition: background-color 0.15s, border 0s;
 }
 
-#room-button:active, #region-button:active, #room-button.active, #region-button.active, #create-room:active, #join-room:active, #report-button:active, #pair-button:active, #skip-button:active {
+#room-button:active, #region-button:active, #room-button.active, #region-button.active, #create-room:active, #join-room:active, #messaging-button:active, #pair-button:active, #skip-button:active {
     background-color: var(--bg1);
     border: 1px solid var(--bg5);
 }
@@ -287,7 +288,7 @@ main {
     height: 100%;
     width: 100%;
     min-width: 320px;
-    max-width: 460px;
+    max-width: 480px;
 }
 
 .video-cropper {
@@ -333,8 +334,8 @@ video {
     gap: 10px;
     height: 100%;
     width: 100%;
-    max-width: 540px;
     min-width: 320px;
+    max-width: 480px;
 }
 
 #messaging-container {
@@ -473,7 +474,7 @@ video {
     height: 50px;
 }
 
-#report-button {
+#messaging-button {
     display: flex;
     align-items: center;
     justify-content: center;
@@ -484,10 +485,10 @@ video {
     border-radius: 16px;
     cursor: pointer;
 }
-#report-button svg {
-    width: 1.5rem; /* Adjusts the size of the SVG */
+#messaging-button svg {
+    width: 2rem; /* Adjusts the size of the SVG */
     height: auto; /* Maintains aspect ratio */
-    fill: var(--warningOrange); /* Changes the color of the SVG shapes */
+    fill: var(--primary); /* Changes the color of the SVG shapes */
 }
 #pair-button, #skip-button {
     position: relative;
@@ -549,7 +550,7 @@ video {
         background-color: #00000033;
         backdrop-filter: blur(10px);
         -webkit-backdrop-filter: blur(10px);
-        border: 0;
+        border: 1px solid #ffffff33;
         box-shadow: 0px 2px 8px 0px var(--shadow);
     }
     #room-icon, #region-button svg, #pair-button svg, #skip-button svg {
@@ -618,6 +619,9 @@ video {
         padding-top: 120px;
         mask: linear-gradient(to top, rgba(255,255,255,1), rgba(255,255,255,1), rgba(255,255,255,0)); /* Semi-transparent gradient */
     }
+    #message-feed-container.hide {
+        display: none;
+    }
     .outgoing-message {
         box-shadow: 0px 3px 10px 0px #00000033;
         font-size: 1rem;
@@ -643,19 +647,27 @@ video {
         width: 100%;
         margin: 0;
     }
+    #message-input-container.hide {
+        display: none;
+    }
     #message-input {
         border-radius: 0;
         margin: 0;
         height: 50px;
-        background-color: transparent;
+        background-color: #00000033;
+        border-top: 1px solid transparent;
+        border-bottom: 1px solid transparent;
     }
     #message-input:focus {
         outline: none;
         background-color: #00000033;
         backdrop-filter: blur(10px);
+        -webkit-backdrop-filter: blur(10px);
+        border-top: 1px solid #ffffff33;
+        border-bottom: 1px solid #ffffff33;
     }
     #message-input::placeholder {
-        color: #ddd;
+        color: #ccc;
     }
     #connection-controls {
         align-items: center;
@@ -664,13 +676,13 @@ video {
         padding: 0px 10px;
         background-color: #00000033;
     }
-    #report-button, #pair-button, #skip-button, #report-button:hover, #pair-button:hover, #skip-button:hover, #report-button:active, #pair-button:active, #skip-button:active {
+    #messaging-button, #pair-button, #skip-button, #messaging-button:hover, #pair-button:hover, #skip-button:hover, #messaging-button:active, #pair-button:active, #skip-button:active {
         height: 48px;
         border-radius: 13px;
         background-color: #00000033;
         backdrop-filter: blur(10px);
         -webkit-backdrop-filter: blur(10px);
-        border: 0;
+        border: 1px solid #ffffff33;
         box-shadow: 0px 2px 8px 0px var(--shadow);
     }
 
@@ -684,7 +696,7 @@ video {
         background-color: #00000033;
         backdrop-filter: blur(10px);
         -webkit-backdrop-filter: blur(10px);
-        border: 0;
+        border: 1px solid #ffffff33;
         border-radius: 18px;
     }
     #room-dropdown.active {
@@ -702,7 +714,7 @@ video {
         background-color: #00000033;
         backdrop-filter: blur(10px);
         -webkit-backdrop-filter: blur(10px);
-        border: 0;
+        border: 1px solid #ffffff33;
         border-radius: 10px;
         overflow-x: hidden;
     }
@@ -721,7 +733,7 @@ video {
         background-color: #00000033;
         backdrop-filter: blur(10px);
         -webkit-backdrop-filter: blur(10px);
-        border: 0;
+        border: 1px solid #ffffff33;
         border-radius: 10px;
     }
     
@@ -731,28 +743,30 @@ video {
         left: calc(50% - 140px);
         width: 280px;
         height: 380px;
-        padding: 12px;
+        padding: 12px 12px 6px 12px;
         background-color: #00000033;
         backdrop-filter: blur(10px);
         -webkit-backdrop-filter: blur(10px);
-        border: 0;
+        border: 1px solid #ffffff33;
         border-radius: 18px;
         box-shadow: 0px 2px 8px 0px var(--shadow);
     }
 
     #region-dropdown.active {
         display: flex;
+        align-items: center;
+        justify-content: center;
         top: calc(50% - 190px);
         left: calc(50% - 140px);
     }
     .region-option {
-        border-bottom: 1px solid #00000066;
+        border-bottom: 1px solid #ffffff33;
     }
     .region-option:first-of-type {
         background-color: #00000033;
         backdrop-filter: blur(10px);
         -webkit-backdrop-filter: blur(10px);
-        border-bottom: 0;
+        border: 1px solid #ffffff33;
         border-radius: 10px;
     }
     .region-option:last-of-type {

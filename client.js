@@ -28,7 +28,7 @@ const playIcon = pairButton.querySelector('.fa-play');
 const pauseIcon = pairButton.querySelector('.fa-pause');
 const skipButton = document.getElementById('skip-button');
 
-const reportButton = document.getElementById('report-button');
+const messagingButton = document.getElementById('messaging-button');
 
 
 // Assign State Variables
@@ -523,3 +523,10 @@ regionCheckboxes.forEach(checkbox => {
 
 // Initial update in case there's a need to adjust the Global checkbox based on others
 updateGlobalCheckbox();
+
+//Messaging Button
+
+messagingButton.addEventListener('click', () => {
+    document.getElementById('message-feed-container').classList.toggle('hide');
+    document.getElementById('message-input-container').classList.toggle('hide');
+});
