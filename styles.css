@@ -525,12 +525,16 @@ video {
 }
 
 @media (max-width: 680px) {
+    body {
+        overflow: hidden;
+    }
     header {
         padding: 0px;
         flex-direction: column;
         gap: 8px;
         justify-content: center;
         border: 0;
+        overflow: hidden;
     }
     #header-left {
         display: none;
@@ -562,6 +566,7 @@ video {
     main {
         padding: 0px;
         margin-top: 68px;
+        overflow: hidden;
     }
     #main-left.hide, #main-right.hide {
         display: flex;
@@ -575,6 +580,7 @@ video {
         max-width: 100%;
         height: calc(100% - 210px);
         max-height: 100%;
+        overflow: hidden;
     }
     .video-cropper {
         display: flex;
@@ -598,6 +604,7 @@ video {
         max-width: 800px;
         height: calc(100% - 68px);
         gap: 0;
+        overflow: hidden;
     }
     #messaging-container {
         background-color: #00000033;
