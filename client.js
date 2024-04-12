@@ -46,6 +46,20 @@ socket.on('yourId', (id) => {
     myId = id;
 });
 
+// Prevent Server Disconnect with heartbeat.
+socket.on("heartbeat", (data) => {
+    console.log("Heartbeat received from server:", data);
+    socket.emit("heartbeat", { message: "pong", time: Date.now() });
+});
+
+socket.on("connect", () => {
+    console.log("Connected to server.");
+});
+
+socket.on("disconnect", () => {
+    console.log("Disconnected from server.");
+});
+
 // Useful Responses from Server
 socket.on('unpaired', () => {
     // Reassign Variables
