@@ -5,8 +5,8 @@
 
 /* COLORS */
 :root {
-    --primary: rgb(58, 206, 255);
-    --warningOrange: #ff5b3e;
+    --primary: #44ccff;
+    --warningOrange: #ff553e;
     --outgoingMessage: rgb(0, 165, 220);
 
     --bg0: #0a0d10;
@@ -17,13 +17,13 @@
     --bg5: #5a5d60;
 
     --ftBase: #eee;
-    --ftBlue: #DFF7FF;
+    --ftBlue: #eee;
 
     --shadow: #00000066;
 }
 
 .light-theme {
-    --primary: rgb(0, 159, 216);
+    --primary: #11aadd;
 
     --bg0: #f9fcff;
     --bg1: #e9ecef;
@@ -33,7 +33,7 @@
     --bg5: #a9acaf;
 
     --ftBase: #222;
-    --ftBlue: #3bb3e3;
+    --ftBlue: #11aadd;
 
     --shadow: #00000022;
 }
