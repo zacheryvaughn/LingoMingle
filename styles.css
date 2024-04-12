@@ -108,6 +108,7 @@ header {
 #header-left h1 {
     font-family: Cakecafe, sans-serif;
     color: var(--ftBlue);
+    transform: rotate(-2deg);
 }
 
 #logo {
