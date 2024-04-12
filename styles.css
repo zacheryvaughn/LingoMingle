@@ -112,6 +112,7 @@ header {
 
 #logo {
     height: 46px;
+    margin-right: -5px;
 }
 
 #header-right {
