@@ -546,14 +546,13 @@ video {
         width: calc(50% - 15px);
         background-color: #00000033;
         backdrop-filter: blur(10px);
+        -webkit-backdrop-filter: blur(10px);
         border: 0;
+        box-shadow: 0px 2px 8px 0px var(--shadow);
     }
     #room-icon, #region-button svg, #pair-button svg, #skip-button svg {
         position: absolute;
         left: 12px;
-    }
-    #room-dropdown, #region-dropdown {
-        right: calc(50% - 120px);
     }
     main {
         padding: 0px;
@@ -668,6 +667,96 @@ video {
         border-radius: 13px;
         background-color: #00000033;
         backdrop-filter: blur(10px);
+        -webkit-backdrop-filter: blur(10px);
         border: 0;
+        box-shadow: 0px 2px 8px 0px var(--shadow);
+    }
+
+    #room-dropdown {
+        display: none;
+        top: calc(50% - 70px);
+        left: calc(50% - 160px);
+        height: 140px;
+        width: 320px;
+        padding: 12px;
+        background-color: #00000033;
+        backdrop-filter: blur(10px);
+        -webkit-backdrop-filter: blur(10px);
+        border: 0;
+        border-radius: 18px;
+    }
+    #room-dropdown.active {
+        display: flex;
+        top: calc(50% - 70px);
+        left: calc(50% - 160px);
+    }
+    #room-id-input {
+        font-size: 1.5rem;
+        font-weight: 200;
+        resize: none;
+        width: 100%;
+        padding: 22px 16px;
+        margin: 0 0 12px;
+        background-color: #00000033;
+        backdrop-filter: blur(10px);
+        -webkit-backdrop-filter: blur(10px);
+        border: 0;
+        border-radius: 10px;
+        overflow-x: hidden;
+    }
+    #room-id-input:focus {
+        outline: 2px solid #0080ff;
+    }
+    #create-join-container {
+        gap: 12px;
+        width: 100%;
+        height: 100%;
+        padding: 0;
+    }
+    #create-room, #join-room, #create-room:hover, #join-room:hover, #create-room:active, #join-room:active {
+        width: 50%;
+        height: 100%;
+        background-color: #00000033;
+        backdrop-filter: blur(10px);
+        -webkit-backdrop-filter: blur(10px);
+        border: 0;
+        border-radius: 10px;
+    }
+    
+    #region-dropdown {
+        display: none;
+        top: calc(50% - 190px);
+        left: calc(50% - 140px);
+        width: 280px;
+        height: 380px;
+        padding: 12px;
+        background-color: #00000033;
+        backdrop-filter: blur(10px);
+        -webkit-backdrop-filter: blur(10px);
+        border: 0;
+        border-radius: 18px;
+        box-shadow: 0px 2px 8px 0px var(--shadow);
+    }
+
+    #region-dropdown.active {
+        display: flex;
+        top: calc(50% - 190px);
+        left: calc(50% - 140px);
+    }
+    .region-option {
+        border-bottom: 1px solid #00000066;
+    }
+    .region-option:first-of-type {
+        background-color: #00000033;
+        backdrop-filter: blur(10px);
+        -webkit-backdrop-filter: blur(10px);
+        border-bottom: 0;
+        border-radius: 10px;
+    }
+    .region-option:last-of-type {
+        border-bottom: 0;
+    }
+    .region-option input {
+        transform: scale(1.8);
     }
 }
