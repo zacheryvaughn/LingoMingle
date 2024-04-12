@@ -46,10 +46,11 @@ socket.on('yourId', (id) => {
     myId = id;
 });
 
-// Prevent Server Disconnect with heartbeat.
-socket.on("heartbeat", (data) => {
-    console.log("Heartbeat received from server:", data);
-    socket.emit("heartbeat", { message: "pong", time: Date.now() });
+socket.on("heartbeat", (message) => {
+    console.log("Heartbeat message received:", message);
+    if (message === "PING") {
+        socket.emit("heartbeat", "PONG");
+    }
 });
 
 socket.on("connect", () => {

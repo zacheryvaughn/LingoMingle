@@ -569,7 +569,7 @@ video {
     #main-left {
         z-index: -1;
         position: absolute;
-        top: 92px;
+        bottom: 118px;
         justify-content: flex-start;
         gap: 0;
         max-width: 100%;
@@ -592,8 +592,11 @@ video {
         object-fit: cover; /* This will ignore the aspect ratio and fill the container */
     }
     #main-right {
+        z-index: 0;
+        position: absolute;
+        bottom: 0;
         max-width: 800px;
-        height: 100%;
+        height: calc(100% - 68px);
         gap: 0;
     }
     #messaging-container {
@@ -610,7 +613,7 @@ video {
         box-shadow: 0px 3px 10px 0px #00000033;
     }
     #message-feed-container {
-        max-height: 60%;
+        max-height: 50%;
         width: calc(100% - 24px);
         padding-top: 120px;
         mask: linear-gradient(to top, rgba(255,255,255,1), rgba(255,255,255,1), rgba(255,255,255,0)); /* Semi-transparent gradient */
