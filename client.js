@@ -73,7 +73,7 @@ socket.on('unpaired', () => {
     pairButtonText.textContent = 'Start';
     playIcon.classList.remove('hidden');
     pauseIcon.classList.add('hidden');
-    pairButton.style.width = '40%';
+    pairButton.style.width = '50%';
     // Show the skipButton
     skipButton.style.display = 'flex';
     // Clear messageFeed
@@ -131,7 +131,9 @@ socket.on('pairedInPrivateRoom', (data) => {
     pairButtonText.textContent = 'Leave';
     playIcon.classList.add('hidden');
     pauseIcon.classList.remove('hidden');
-    pairButton.style.width = 'calc(80% + 14px)';
+    pairButton.style.width = 'calc(100%)';
+
+    toggleDropdown('room-button', 'room-dropdown')
     // Hide the skipButton
     skipButton.style.display = 'none';
     // Clear messageFeed
@@ -152,7 +154,9 @@ socket.on('privateRoomCreated', () => {
     pairButtonText.textContent = 'Leave';
     playIcon.classList.add('hidden');
     pauseIcon.classList.remove('hidden');
-    pairButton.style.width = 'calc(80% + 14px)';
+    pairButton.style.width = 'calc(100%)';
+
+    toggleDropdown('room-button', 'room-dropdown')
     // Hide the skipButton
     skipButton.style.display = 'none';
     // Clear messageFeed
@@ -185,7 +189,6 @@ skipButton.addEventListener('click', () => {
     };
 });
 
-
 // Function to handle private room emit conditions.
 function handleRoomTransition(actionType, roomId) {
     // First, clear any existing state.
@@ -197,7 +200,7 @@ function handleRoomTransition(actionType, roomId) {
     } else if (inPrivateRoom) {
         socket.emit('leavePrivateRoom');
         endCall();
-    }
+    };
 
     // Then, after a short delay to allow the server to process the state clearing, perform the requested action.
     setTimeout(() => {
@@ -207,23 +210,48 @@ function handleRoomTransition(actionType, roomId) {
             socket.emit('joinPrivateRoom', roomId);
         }
     }, 500); // Adjust delay as needed based on server response times.
+};
+
+// Function to update placeholder text and style
+function updatePlaceholder(text, showError) {
+    roomIdInput.placeholder = text;
+    if (showError) {
+        roomIdInput.value = ''; // Clear the input field to show the placeholder as a warning
+        roomIdInput.classList.add('error-placeholder');
+    } else {
+        roomIdInput.classList.remove('error-placeholder');
+    }
 }
 
 createButton.addEventListener('click', () => {
     const roomId = roomIdInput.value.trim();
-    if (roomId.length > 6) {
+    if (roomId.length >= 6) {
         handleRoomTransition('create', roomId);
     } else {
-        console.log('Room ID must be longer than 6 characters.');
+        updatePlaceholder("At least 6 characters...", true);
     }
 });
 
 joinButton.addEventListener('click', () => {
     const roomId = roomIdInput.value.trim();
-    if (roomId.length > 6) {
+    if (roomId.length >= 6) {
         handleRoomTransition('join', roomId);
+        // Set a timeout to check room status after 3 seconds
+        setTimeout(() => {
+            // Check if still not in a private room after 3 seconds
+            if (!inPrivateRoom) {
+                updatePlaceholder("Room does not exist...", true);
+            }
+        }, 2000);
     } else {
-        console.log('Room ID must be longer than 6 characters.');
+        updatePlaceholder("At least 6 characters...", true);
+    }
+});
+
+roomIdInput.addEventListener('input', () => {
+    // Reset placeholder when user starts typing again
+    if (roomIdInput.classList.contains('error-placeholder')) {
+        updatePlaceholder("Enter room ID...", false);
     }
 });
 
@@ -250,8 +278,8 @@ function sendMessage() {
         console.log("You must pair before sending a message.");
     } else {
         console.log("You cannot send an empty message.");
-    }
-}
+    };
+};
 
 socket.on('messageFromServer', (data) => {
     if ((data.sender !== myId) && (isPaired || inPrivateRoom)) {
@@ -260,21 +288,21 @@ socket.on('messageFromServer', (data) => {
         messageElement.innerHTML = data.text.replace(/\n/g, '<br>');
         messageFeed.appendChild(messageElement);
         messageFeed.scrollTop = messageFeed.scrollHeight;
-    }
+    };
 });
 
 function resizeTextarea() {
     messageInput.style.height = 'auto';  // Ensure it starts from the default height
     messageInput.style.height = messageInput.scrollHeight + 'px';
-}
+};
 
 function handleSend(event) {
     if (event.key === 'Enter' && !event.shiftKey) {
         event.preventDefault();
         sendMessage();
-    }
+    };
     resizeTextarea();
-}
+};
 
 messageInput.addEventListener('input', resizeTextarea);
 messageInput.addEventListener('keydown', handleSend);
@@ -290,13 +318,13 @@ if (isSafari()) {
     document.body.classList.add('safari');
 } else if (isFirefox()) {
     document.body.classList.add('firefox');
-}
+};
 
 // Theme Setting
 function setTheme() {
     const shouldUseLightTheme = localStorage.getItem('theme') === 'light' && window.innerWidth >= 680;
     document.body.classList.toggle('light-theme', shouldUseLightTheme);
-}
+};
 
 themeSwitch.addEventListener('click', () => {
     const currentThemeIsLight = document.body.classList.contains('light-theme');

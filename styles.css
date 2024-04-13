@@ -7,8 +7,8 @@
 :root {
     --primary: #44ccff;
     --warningOrange: #ff6633;
-    --greenStart: #55dd55;
-    --redStop: #dd5555;
+    --greenStart: #44ff66;
+    --redStop: #ff4444;
     --outgoingMessage: rgb(0, 165, 220);
 
     --bg0: #0a0d10;
@@ -214,6 +214,13 @@ header {
     border-radius: 6px;
     border: 1px solid var(--bg3);
     cursor: pointer;
+}
+input.error-placeholder::placeholder {
+    color: var(--redStop); /* Change placeholder text to red */
+}
+
+input.error-placeholder {
+    border-color: var(--redStop); /* Change border color to red to indicate error */
 }
 
 #region-dropdown {
@@ -475,17 +482,6 @@ video {
 
 #messaging-button {
     display: none;
-    align-items: center;
-    justify-content: center;
-    gap: 14px;
-    width: 20%;
-    cursor: pointer;
-}
-#messaging-button svg {
-    width: 3.2rem; /* Adjusts the size of the SVG */
-    height: auto; /* Maintains aspect ratio */
-    fill: var(--primary); /* Changes the color of the SVG shapes */
-    filter: drop-shadow(-1px 2px 3px #00000066);
 }
 #arrange-button {
     display: flex;
@@ -508,7 +504,7 @@ video {
     align-items: center;
     justify-content: center;
     gap: 14px;
-    width: 40%;
+    width: 50%;
     background-color: var(--bg2);
     border: 1px solid var(--bg3);
     border-radius: 16px;
@@ -661,47 +657,43 @@ video {
         margin-left: 12px;
     }
     #message-input-container {
-        width: 100%;
-        margin: 0;
+        width: calc(100% - 85px);
+        margin: 0px 75px 0px 10px;
     }
     #message-input-container.hide {
         display: none;
     }
     #message-input {
-        border-radius: 0;
-        margin: 0;
-        background-color: #00000033;
-        border-top: 1px solid transparent;
-        border-bottom: 1px solid transparent;
-    }
-    #message-input:focus {
         outline: none;
         background-color: #00000033;
         backdrop-filter: blur(10px);
         -webkit-backdrop-filter: blur(10px);
-        border-top: 1px solid #ffffff33;
-        border-bottom: 1px solid #ffffff33;
+        border: 1px solid #ffffff33;
+        border-radius: 16px;
     }
     #message-input::placeholder {
         color: #ccc;
     }
-    #send-button {
-        filter: drop-shadow(1px 2px 3px #00000066);
+    #message-input:focus {
+        outline: none;
     }
     #send-button {
+        bottom: 1px;
+        filter: drop-shadow(1px 2px 3px #00000066);
+    }
+    #messaging-button {
         position: absolute;
-        right: 6px;
-        bottom: 0px;
-        height: 58px;
-        padding: 10px;
-        fill: var(--primary);
+        right: 22px;
+        bottom: 80px;
+        height: 60px;
+        display: flex;
         cursor: pointer;
-        transition: right 0.1s, bottom 0.1s;
-        filter: drop-shadow(1px 2px 3px #00000066);
     }
-    #send-button:active {
-        right: 6px;
-        bottom: 0px;
+    #messaging-button svg {
+        width: 2.5rem; /* Adjusts the size of the SVG */
+        height: auto; /* Maintains aspect ratio */
+        fill: var(--primary); /* Changes the color of the SVG shapes */
+        filter: drop-shadow(1px 2px 3px #00000066);
     }
     #connection-controls {
         height: 80px;
@@ -718,20 +710,11 @@ video {
         border: 1px solid #ffffff33;
         box-shadow: 0px 2px 8px 0px var(--shadow);
     }
-    #messaging-button {
-        display: flex;
-    }
-    #messaging-button svg, #messaging-button svg {
-        filter: drop-shadow(-1px 2px 3px #00000099);
-    }
-    #arrange-button {
-        display: none;
-    }
     #room-dropdown {
         display: none;
         top: calc(50% - 70px);
         left: calc(50% - 160px);
-        height: 140px;
+        min-height: 150px;
         width: 320px;
         padding: 12px;
         background-color: #00000033;
@@ -750,8 +733,9 @@ video {
         font-weight: 200;
         resize: none;
         width: 100%;
+        height: 59px;
         padding: 22px 16px;
-        margin: 0 0 12px;
+        margin: 1px 1px 12px 1px;
         background-color: #00000033;
         backdrop-filter: blur(10px);
         -webkit-backdrop-filter: blur(10px);
@@ -765,7 +749,7 @@ video {
     #create-join-container {
         gap: 12px;
         width: 100%;
-        height: 100%;
+        height: 53px;
         padding: 0;
     }
     #create-room, #join-room, #create-room:hover, #join-room:hover, #create-room:active, #join-room:active {
