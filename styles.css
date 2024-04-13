@@ -6,8 +6,9 @@
 /* COLORS */
 :root {
     --primary: #44ccff;
-    --warningOrange: #ff553e;
-    --green: #44f35f;
+    --warningOrange: #ff6633;
+    --greenStart: #55dd55;
+    --redStop: #dd5555;
     --outgoingMessage: rgb(0, 165, 220);
 
     --bg0: #0a0d10;
@@ -136,17 +137,17 @@ header {
     cursor: pointer;
 }
 
-#room-button:hover, #region-button:hover, #create-room:hover, #join-room:hover, #messaging-button:hover, #pair-button:hover, #skip-button:hover {
+#room-button:hover, #region-button:hover, #create-room:hover, #join-room:hover, #pair-button:hover, #skip-button:hover {
     background-color: var(--bg1);
     transition: background-color 0.15s, border 0s;
 }
 
-#room-button:active, #region-button:active, #room-button.active, #region-button.active, #create-room:active, #join-room:active, #messaging-button:active, #pair-button:active, #skip-button:active {
+#room-button:active, #region-button:active, #room-button.active, #region-button.active, #create-room:active, #join-room:active, #pair-button:active, #skip-button:active {
     background-color: var(--bg1);
     border: 1px solid var(--bg5);
 }
 
-#room-icon {
+#room-button svg {
     width: 1.6rem;
     fill: var(--primary);
 }
@@ -154,7 +155,6 @@ header {
 #region-button svg {
     width: 1.2rem;
     fill: var(--primary);
-    background-color: greenyellow;
     box-sizing: content-box;
     border-radius: 20px;
 }
@@ -283,7 +283,7 @@ main {
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    gap: 10px;
+    gap: 12px;
     height: 100%;
     width: 100%;
     min-width: 320px;
@@ -330,7 +330,7 @@ video {
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    gap: 10px;
+    gap: 12px;
     height: 100%;
     width: 100%;
     min-width: 320px;
@@ -383,12 +383,12 @@ video {
 }
 
 #message-input {
-    font-size: 1.2rem;
+    font-size: 1.3rem;
     font-weight: 200;
     resize: none;
     width: 100%;
     max-height: 200px;
-    padding: 14px 68px 14px 16px; /* Adjust padding to accommodate send button */
+    padding: 16px 68px 16px 16px; /* Adjust padding to accommodate send button */
     margin-top: 10px;
     background-color: var(--bg2);
     box-sizing: border-box;
@@ -404,9 +404,9 @@ video {
 
 #send-button {
     position: absolute; /* Position the send button absolutely */
-    right: 2px; /* Adjust the distance from the right side */
+    right: 6px; /* Adjust the distance from the right side */
     bottom: -1px;
-    height: 52px;
+    height: 56px;
     padding: 10px;
     fill: var(--primary);
     cursor: pointer;
@@ -414,7 +414,7 @@ video {
 }
 
 #send-button:active {
-    right: -2px;
+    right: 0px;
     bottom: 3px;
 }
 
@@ -468,26 +468,39 @@ video {
 
 #connection-controls {
     display: flex;
-    gap: 10px;
+    gap: 12px;
     width: 100%;
     height: 60px;
 }
 
 #messaging-button {
+    display: none;
+    align-items: center;
+    justify-content: center;
+    gap: 14px;
+    width: 20%;
+    cursor: pointer;
+}
+#messaging-button svg {
+    width: 3.2rem; /* Adjusts the size of the SVG */
+    height: auto; /* Maintains aspect ratio */
+    fill: var(--primary); /* Changes the color of the SVG shapes */
+    filter: drop-shadow(-1px 2px 3px #00000066);
+}
+#arrange-button {
     display: flex;
     align-items: center;
     justify-content: center;
     gap: 14px;
     width: 20%;
-    background-color: var(--bg2);
-    border: 1px solid var(--bg3);
-    border-radius: 16px;
     cursor: pointer;
 }
-#messaging-button svg {
-    width: 2rem; /* Adjusts the size of the SVG */
+#arrange-button svg {
+    display: block;
+    width: 3rem; /* Adjusts the size of the SVG */
     height: auto; /* Maintains aspect ratio */
     fill: var(--primary); /* Changes the color of the SVG shapes */
+    filter: drop-shadow(-1px 2px 3px #00000066);
 }
 #pair-button, #skip-button {
     position: relative;
@@ -506,10 +519,15 @@ video {
     left: 18px;
     width: 1rem;
     height: auto;
-    fill: var(--primary);
 }
 #pair-button svg.hidden {
     opacity: 0;
+}
+.fa-play {
+    fill: var(--greenStart);
+}
+.fa-pause {
+    fill: var(--redStop);
 }
 #skip-button svg {
     position: absolute;
@@ -552,9 +570,9 @@ video {
         border: 1px solid #ffffff33;
         box-shadow: 0px 2px 8px 0px var(--shadow);
     }
-    #room-icon, #region-button svg, #pair-button svg, #skip-button svg {
+    #room-button svg, #region-button svg {
         position: absolute;
-        left: 12px;
+        left: 20px;
     }
     main {
         padding: 0px;
@@ -652,7 +670,6 @@ video {
     #message-input {
         border-radius: 0;
         margin: 0;
-        height: 50px;
         background-color: #00000033;
         border-top: 1px solid transparent;
         border-bottom: 1px solid transparent;
@@ -668,6 +685,24 @@ video {
     #message-input::placeholder {
         color: #ccc;
     }
+    #send-button {
+        filter: drop-shadow(1px 2px 3px #00000066);
+    }
+    #send-button {
+        position: absolute;
+        right: 6px;
+        bottom: 0px;
+        height: 58px;
+        padding: 10px;
+        fill: var(--primary);
+        cursor: pointer;
+        transition: right 0.1s, bottom 0.1s;
+        filter: drop-shadow(1px 2px 3px #00000066);
+    }
+    #send-button:active {
+        right: 6px;
+        bottom: 0px;
+    }
     #connection-controls {
         height: 80px;
         align-items: center;
@@ -675,16 +710,23 @@ video {
         padding: 10px;
         background-color: #00000033;
     }
-    #messaging-button, #pair-button, #skip-button, #messaging-button:hover, #pair-button:hover, #skip-button:hover, #messaging-button:active, #pair-button:active, #skip-button:active {
+    #pair-button, #skip-button, #pair-button:hover, #skip-button:hover, #pair-button:active, #skip-button:active {
         height: 60px;
-        border-radius: 13px;
         background-color: #00000033;
         backdrop-filter: blur(10px);
         -webkit-backdrop-filter: blur(10px);
         border: 1px solid #ffffff33;
         box-shadow: 0px 2px 8px 0px var(--shadow);
     }
-
+    #messaging-button {
+        display: flex;
+    }
+    #messaging-button svg, #messaging-button svg {
+        filter: drop-shadow(-1px 2px 3px #00000099);
+    }
+    #arrange-button {
+        display: none;
+    }
     #room-dropdown {
         display: none;
         top: calc(50% - 70px);
