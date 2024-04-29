@@ -93,10 +93,10 @@ header {
     align-items: center;
     justify-content: space-between;
     width: 100%;
+    max-width: 1140px;
     height: 68px;
     padding: 0px 40px 0px 32px;
     background-color: var(--bg0);
-    border-bottom: 1px solid var(--bg2);
 }
 
 #header-left {
@@ -283,6 +283,7 @@ main {
     width: 100%;
     padding: 20px;
     margin-top: 68px;
+    border-top: 1px solid var(--bg2);
 }
 
 #main-left {
@@ -294,7 +295,7 @@ main {
     height: 100%;
     width: 100%;
     min-width: 320px;
-    max-width: 480px;
+    max-width: 540px;
 }
 
 .video-cropper {
@@ -341,7 +342,7 @@ video {
     height: 100%;
     width: 100%;
     min-width: 320px;
-    max-width: 480px;
+    max-width: 540px;
 }
 
 #messaging-container {
@@ -574,6 +575,7 @@ video {
         padding: 0px;
         margin-top: 68px;
         overflow: hidden;
+        border-top: none;
     }
     #main-left {
         z-index: -1;
